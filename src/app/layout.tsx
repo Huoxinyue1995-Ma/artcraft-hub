@@ -1,0 +1,33 @@
+import type { Metadata } from 'next'
+import Script from 'next/script'
+import { ConsentBanner } from '@/components/consent-banner'
+import { AnalyticsEvents } from '@/components/analytics-events'
+import './globals.css'
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'
+const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: { default: 'Artcraft Hub', template: '%s · Artcraft Hub' },
+  description: 'Beginner-friendly Artcraft downloads, setup guides, features, and Adobe comparisons.',
+  openGraph: { type: 'website', siteName: 'Artcraft Hub', title: 'Artcraft Hub', description: 'Independent Artcraft resource for beginners.' },
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="zh-CN">
+      <body>
+        {children}
+        <ConsentBanner />
+        <AnalyticsEvents />
+        {gaId ? <>
+          <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
+          <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','${gaId}',{anonymize_ip:true});`}</Script>
+        </> : null}
+        {adsenseId ? <Script async strategy="afterInteractive" src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`} crossOrigin="anonymous" /> : null}
+      </body>
+    </html>
+  )
+}

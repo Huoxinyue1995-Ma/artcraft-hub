@@ -1,0 +1,11 @@
+import type { Metadata } from 'next'
+import { ArrowUpRight } from 'lucide-react'
+import { PageIntro, SourceLine } from '@/components/site-shell'
+import { getLang, featureData, OFFICIAL, pageMetadata } from '@/lib/content'
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const lang = getLang((await params).locale)
+  return pageMetadata(lang, '/features', lang === 'zh' ? 'Artcraft 功能说明' : 'Artcraft features explained', lang === 'zh' ? '用新手能看懂的话，整理 Artcraft 官方展示的 2D、3D、图像和视频创作能力。' : 'A plain-language guide to the 2D, 3D, image, and video capabilities shown by Artcraft.')
+}
+
+export default async function FeaturesPage({ params }: { params: Promise<{ locale: string }> }) { const lang = getLang((await params).locale); const zh = lang === 'zh'; return <div className="container page-space"><PageIntro lang={lang} eyebrow="FEATURES" title={zh ? '把“能做什么”说清楚。' : 'A plain-language look at what it can do.'} description={zh ? '这些能力来自官方 README 的展示。Artcraft 更新很快，下面的描述以最后检查日期为准。' : 'These capabilities come from the official README. Artcraft moves quickly, so the descriptions are tied to the last checked date.'} /><div className="feature-grid">{featureData[lang].map((feature) => <article className="feature-card" key={feature.title}><span className="feature-icon">{feature.icon}</span><h2>{feature.title}</h2><p>{feature.body}</p></article>)}</div><section className="split-panel"><div><p className="eyebrow">{zh ? '怎么理解' : 'HOW TO READ THIS'}</p><h2>{zh ? '它更像一个创作工作台。' : 'Think of it as a creative workbench.'}</h2></div><p>{zh ? 'Artcraft 把提示词、画布、2D/3D 场景和不同模型放在一个桌面工具里。它和 Photoshop、Illustrator、Premiere Pro、After Effects 的工作重点不同，不要把“有某个功能”理解成“能完整替代一整套软件”。' : 'Artcraft brings prompts, a canvas, 2D/3D scenes, and model choices into one desktop tool. Its focus differs from Photoshop, Illustrator, Premiere Pro, and After Effects, so one feature does not mean it replaces an entire suite.'}</p></section><a className="source-box source-box-link" href={OFFICIAL.github} target="_blank" rel="noreferrer"><span>{zh ? '在官方 README 查看功能原文' : 'Read the feature details in the official README'}</span><ArrowUpRight size={16} /></a><SourceLine lang={lang} /></div> }
