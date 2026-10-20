@@ -92,18 +92,22 @@ export const featureData = {
   zh: [
     { icon: '✦', title: '2D 合成', body: '把图像、文字和效果放在同一个画布里，适合快速做视觉草稿。' },
     { icon: '◇', title: '3D 合成', body: '把 3D 内容和画面组合起来，探索更立体的创作方式。' },
-    { icon: '◌', title: '角色姿态与背景移除', body: '帮助处理角色姿态、身份和背景，减少重复的手工步骤。' },
+    { icon: '◌', title: '角色姿态与身份', body: '调整角色姿态，也可以用参考角色帮助保持身份和画面方向。' },
+    { icon: '◎', title: '场景搭建', body: '在同一场景里安排背景、前景、道具和镜头位置，再继续创作。' },
+    { icon: '▧', title: '背景移除与画布编辑', body: '移除背景，用绘画、蒙版和局部修改引导图像变化。' },
     { icon: '↗', title: '图像转 3D 网格', body: '尝试把一张图变成立体网格，方便继续做 3D 实验。' },
     { icon: '✺', title: '文生图与提示词编辑', body: '用文字描述想法，也可以继续调整已有画面。' },
-    { icon: '▶', title: '场景搭建与图生视频', body: '在画布和场景里整理素材，并探索把静态图变成动态片段。' },
+    { icon: '▶', title: '图生视频', body: '用视频模型把一张图做成动态片段，并继续控制创作方向。' },
   ],
   en: [
     { icon: '✦', title: '2D compositing', body: 'Bring images, text, and effects together on one canvas for quick visual drafts.' },
     { icon: '◇', title: '3D compositing', body: 'Mix 3D content with your scene and explore a more dimensional workflow.' },
-    { icon: '◌', title: 'Pose & background tools', body: 'Work with character poses, identity, and background removal to cut down repetitive steps.' },
+    { icon: '◌', title: 'Character pose & identity', body: 'Pose a character and use references to guide identity and shot direction.' },
+    { icon: '◎', title: 'Scene blocking', body: 'Arrange backdrops, foregrounds, props, and camera placement before generating.' },
+    { icon: '▧', title: 'Background & canvas editing', body: 'Remove backgrounds and use drawing, masks, and local edits to guide changes.' },
     { icon: '↗', title: 'Image to 3D mesh', body: 'Experiment with turning a picture into a 3D mesh for further exploration.' },
     { icon: '✺', title: 'Text-to-image editing', body: 'Describe an idea in words, then keep refining an existing image with prompts.' },
-    { icon: '▶', title: 'Scene tools & image-to-video', body: 'Arrange assets in scenes and explore turning still images into motion.' },
+    { icon: '▶', title: 'Image to video', body: 'Animate an image with video models while keeping control over the creative direction.' },
   ],
 } as const
 
