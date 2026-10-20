@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 
-const paths = ['', '/downloads', '/features', '/faq', '/about', '/privacy', '/terms', '/compare/adobe', '/install/windows', '/install/macos', '/install/linux']
+const paths = ['', '/downloads', '/features', '/faq', '/about', '/contact', '/privacy', '/terms', '/compare/adobe', '/install/windows', '/install/macos', '/install/linux']
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'

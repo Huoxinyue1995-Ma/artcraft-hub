@@ -69,6 +69,7 @@
 | `/zh/compare/adobe`、`/en/compare/adobe` | Artcraft 与四个 Adobe 产品的事实对照表和选择建议 |
 | `/zh/faq`、`/en/faq` | 下载失败、版本选择、系统要求、许可证、账号和安全提示 |
 | `/zh/about`、`/en/about` | 本站是谁、如何更新资料、非官方声明、联系邮箱 |
+| `/zh/contact`、`/en/contact` | 联系邮箱，以及报告链接或资料变化的方法 |
 | `/zh/privacy`、`/en/privacy` | GA4、Cookie、广告、联系信息和外部链接说明 |
 | `/zh/terms`、`/en/terms` | 使用条款、第三方链接免责声明、版本与兼容性免责声明 |
 | `/robots.txt`、`/sitemap.xml`、`/ads.txt` | 搜索引擎、站点地图和 AdSense 所需文件 |

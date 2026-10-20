@@ -48,6 +48,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
           <div>
             <p className="footer-heading">{lang === 'zh' ? '关于本站' : 'About this site'}</p>
             <Link href={`/${lang}/about`}>{lang === 'zh' ? '关于与来源' : 'About & sources'}</Link>
+            <Link href={`/${lang}/contact`}>{lang === 'zh' ? '联系' : 'Contact'}</Link>
             <Link href={`/${lang}/privacy`}>{lang === 'zh' ? '隐私政策' : 'Privacy'}</Link>
             <Link href={`/${lang}/terms`}>{lang === 'zh' ? '使用条款' : 'Terms'}</Link>
           </div>
