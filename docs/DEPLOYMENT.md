@@ -6,7 +6,20 @@
 
 当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
 
-截至本次整理，代码、GitHub 仓库、Vercel 项目和根域名 `artcraftphotocraft.space` 已可用；`www` 子域名仍需补充 CNAME（可选）。Search Console、GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
+截至本次整理，代码、GitHub 仓库、Vercel 项目、根域名 `artcraftphotocraft.space` 和 Google Search Console 已可用；Google 的 `sitemap.xml` 已提交成功并发现 24 个网址。`www` 子域名仍需补充 CNAME（可选）。GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
+
+当前上线状态快照：
+
+| 项目 | 当前状态 |
+| --- | --- |
+| GitHub | 公开仓库 `Huoxinyue1995-Ma/artcraft-hub`，主分支已推送 |
+| Vercel | 最新生产部署 Ready，根域名已接到 Production |
+| 正式域名 | `https://artcraftphotocraft.space` 作为主地址；`www` CNAME 尚未配置 |
+| Google Search Console | URL 前缀资源已用 HTML 标记验证 |
+| Google sitemap | `/sitemap.xml` 提交成功，已发现 24 个网址 |
+| GA4 | 等待 Measurement ID，并需要在同意统计后测试实时数据 |
+| Bing | 等待验证并提交 sitemap |
+| AdSense | 等待添加网站、验证和审核；审核前不加载广告 |
 
 ## 0. 先准备好这些东西
 
