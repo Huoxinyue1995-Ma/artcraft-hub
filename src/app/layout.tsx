@@ -24,6 +24,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN">
+      <head>
+        {adsenseId ? <meta name="google-adsense-account" content={adsenseId} /> : null}
+      </head>
       <body>
         {children}
         <ConsentBanner />
