@@ -130,6 +130,15 @@ git push origin main
 6. 在 Vercel 把 `artcraftphotocraft.space` 设为主要地址；如果同时添加 `www.artcraftphotocraft.space`，让另一个地址自动跳转。
 7. 更新 `NEXT_PUBLIC_SITE_URL` 为主要地址，重新部署。
 
+本次项目在 Vercel 中显示的记录（如果 Vercel 页面后来给出新值，以新值为准）是：
+
+| 类型 | 名称 | 值 |
+| --- | --- | --- |
+| A | `@` | `216.198.79.1` |
+| CNAME | `www` | `3a38d4486d12f35d.vercel-dns-017.com.` |
+
+如果注册商自动补全域名后缀，名称只填写 `@` 和 `www`，不要再写完整域名。删除与旧主机冲突的 A、AAAA 或 CNAME 记录后保存。Vercel 当前会把根域名跳转到 `www`，所以两条记录都需要添加。
+
 用电脑网络和手机流量分别打开正式域名，确认：
 
 - 地址栏有 HTTPS 锁图标。
