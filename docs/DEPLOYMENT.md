@@ -50,6 +50,8 @@ npm install
 ```bash
 NEXT_PUBLIC_SITE_URL=https://artcraftphotocraft.space
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=
+NEXT_PUBLIC_BING_SITE_VERIFICATION=
 NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-XXXXXXXXXXXXXXXX
 NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL=https://download.你的域名.com
 ```
@@ -58,6 +60,8 @@ NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL=https://download.你的域名.com
 
 - 本项目的正式域名是 `https://artcraftphotocraft.space`；如果你决定把 `www` 作为主地址，必须同步修改这个变量和 Vercel 的主域名设置。
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` 在 GA4 数据流建立后填写。
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 是 Search Console 选择 URL-prefix 属性时提供的 HTML meta 验证值；使用 Domain 属性并完成 DNS TXT 验证时可以留空。
+- `NEXT_PUBLIC_BING_SITE_VERIFICATION` 是 Bing Webmaster 提供的 `msvalidate.01` 值；如果从 Search Console 导入或使用 DNS 验证，可以留空。
 - `NEXT_PUBLIC_ADSENSE_CLIENT_ID` 只有 AdSense 审核通过后才填写并开启广告组件；审核前不要加载广告脚本。
 - `NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL` 指向对象存储的公开下载域名。没有完成镜像检查时可以留空，页面隐藏备用镜像按钮。
 - 公开变量会进入网页代码，不能把 R2 Secret Access Key、GitHub Token 或其他密钥放到 `NEXT_PUBLIC_` 变量中。
@@ -121,6 +125,8 @@ git push origin main
 
    - `NEXT_PUBLIC_SITE_URL`
    - `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+   - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`（只有选择 URL-prefix + HTML meta 验证时才需要）
+   - `NEXT_PUBLIC_BING_SITE_VERIFICATION`（只有选择 Bing HTML meta 验证时才需要）
    - `NEXT_PUBLIC_ADSENSE_CLIENT_ID`（审核通过后）
    - `NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL`（镜像准备好后）
 
@@ -168,6 +174,8 @@ git push origin main
 7. 验证成功后保留 TXT 记录，不要删除。
 
 验证成功的判断：Search Console 显示该域名已验证，且当前 Google 账号列为所有者。
+
+如果暂时不能修改 DNS，也可以在 Search Console 选择 **URL-prefix** 属性并选择 HTML 标记验证：把 Google 给出的值填入 `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`，推送并等待 Vercel 部署后，再回到 Search Console 点击 **Verify**。Bing 的 HTML meta 验证同理，把值填入 `NEXT_PUBLIC_BING_SITE_VERIFICATION`。
 
 ## 8. 提交站点地图
 

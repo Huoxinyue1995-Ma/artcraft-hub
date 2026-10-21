@@ -7,12 +7,18 @@ import './globals.css'
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'
 const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: 'Artcraft Hub', template: '%s · Artcraft Hub' },
   description: 'Beginner-friendly Artcraft downloads, setup guides, features, and Adobe comparisons.',
   openGraph: { type: 'website', siteName: 'Artcraft Hub', title: 'Artcraft Hub', description: 'Independent Artcraft resource for beginners.' },
+  verification: {
+    ...(googleVerification ? { google: googleVerification } : {}),
+    ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
+  },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
