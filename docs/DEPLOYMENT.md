@@ -4,6 +4,8 @@
 
 本项目是新项目。以下命令都在 `artcraft-hub` 目录执行，不要在旧图片工具目录执行。
 
+当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
+
 ## 0. 先准备好这些东西
 
 - GitHub 账号和一个新的仓库，例如 `artcraft-hub`。
@@ -90,6 +92,12 @@ git commit -m "Create Artcraft Hub content site"
 git branch -M main
 git remote add origin https://github.com/你的账号/artcraft-hub.git
 git push -u origin main
+```
+
+本项目实际使用的远程地址是：
+
+```text
+https://github.com/Huoxinyue1995-Ma/artcraft-hub.git
 ```
 
 如果本地已经生成了 `package-lock.json`，确认内容后再单独加入；当前项目可以直接按 `package.json` 安装。不要使用没有检查范围的 `git add .`，避免把 `.env.local`、截图、安装包和本地输出上传。

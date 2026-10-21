@@ -16,6 +16,12 @@
 - [项目需求文档](docs/PRODUCT_REQUIREMENTS.md)
 - [部署文档](docs/DEPLOYMENT.md)
 
-正式域名：<https://artcraftphotocraft.space>（上线前需在 Vercel 完成域名绑定和 HTTPS 验证）。
+项目已经创建并部署：
+
+- GitHub 仓库：<https://github.com/Huoxinyue1995-Ma/artcraft-hub>
+- Vercel 项目：<https://vercel.com/emma-8abb/artcraft-hub>
+- 当前预览地址：<https://artcraft-hub-theta.vercel.app/zh>
+
+正式域名：<https://artcraftphotocraft.space>（DNS 记录传播完成后即可访问；当前 Vercel 已添加该域名）。
 
 站点必须明确标注“非官方整理站”，不能让读者误以为本网站由 ArtCraft 团队或 Adobe 运营。
