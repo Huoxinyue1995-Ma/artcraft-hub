@@ -6,7 +6,7 @@
 
 当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
 
-截至本次整理，代码、GitHub 仓库、Vercel 项目、根域名 `artcraftphotocraft.space` 和 Google Search Console 已可用；Google 的 `sitemap.xml` 已提交成功并发现 24 个网址。`www` 子域名仍需补充 CNAME（可选）。GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
+截至本次整理，代码、GitHub 仓库、Vercel 项目、根域名 `artcraftphotocraft.space`、Google Search Console、GA4、Bing Webmaster 和 AdSense 申请流程均已接通。Google 的 `sitemap.xml` 已提交成功并发现 24 个网址；Bing 已验证网站并提交同一 sitemap。`www` 子域名仍需补充 CNAME（可选）。AdSense 审核由 Google 后台继续处理，广告是否最终获批不由部署决定。
 
 当前上线状态快照：
 
@@ -17,9 +17,9 @@
 | 正式域名 | `https://artcraftphotocraft.space` 作为主地址；`www` CNAME 尚未配置 |
 | Google Search Console | URL 前缀资源已用 HTML 标记验证 |
 | Google sitemap | `/sitemap.xml` 提交成功，已发现 24 个网址 |
-| GA4 | 等待 Measurement ID，并需要在同意统计后测试实时数据 |
-| Bing | 等待验证并提交 sitemap |
-| AdSense | 等待添加网站、验证和审核；审核前不加载广告 |
+| GA4 | 已接入 `G-5D1QDLHCF2`，生产环境已部署 |
+| Bing | 已验证 `artcraftphotocraft.space`，已提交 `https://artcraftphotocraft.space/sitemap.xml` |
+| AdSense | 已添加网站、元标记验证并提交审核；后台显示“正在准备” |
 
 ## 0. 先准备好这些东西
 
@@ -270,19 +270,19 @@ Vercel 适合部署网页，不适合存放经常更新的大型安装包。镜�
 
 按顺序勾选：
 
-- [ ] `npm run typecheck` 成功。
-- [ ] `npm run build` 成功。
-- [ ] Vercel 生产部署成功。
-- [ ] 正式域名可打开，HTTPS 正常。
-- [ ] 中文、英文核心页面可打开。
-- [ ] 官方下载、源码教程和 Adobe 官方来源链接可打开。
-- [ ] 备用镜像已校验，或页面明确说明暂未提供镜像。
-- [ ] `/robots.txt`、`/sitemap.xml`、`/ads.txt` 可访问。
-- [ ] Search Console 域名验证成功。
-- [ ] Search Console 的 `sitemap.xml` 状态为 Success。
-- [ ] GA4 Realtime 看得到测试访问和点击事件。
-- [ ] Bing Webmaster 已验证并提交 sitemap。
-- [ ] AdSense 申请资料齐全并已提交；审核通过前不加载广告。
+- [x] `npm run typecheck` 成功。
+- [x] `npm run build` 成功。
+- [x] Vercel 生产部署成功。
+- [x] 正式域名可打开，HTTPS 正常。
+- [x] 中文、英文核心页面可打开。
+- [x] 官方下载、源码教程和 Adobe 官方来源链接可打开。
+- [x] 备用镜像未提供时，页面明确说明暂未提供镜像。
+- [x] `/robots.txt`、`/sitemap.xml`、`/ads.txt` 可访问。
+- [x] Search Console URL-prefix 资源验证成功。
+- [x] Search Console 的 `sitemap.xml` 已提交并发现 24 个网址。
+- [ ] GA4 Realtime 看得到测试访问和点击事件（需要在 Cookie 提示中同意可选统计后再测）。
+- [x] Bing Webmaster 已验证并提交 sitemap。
+- [x] AdSense 网站已添加、元标记验证成功并已提交审核；广告单元仍等待审核结果。
 
 完成这些项目后，才算达到“功能可用 → Vercel → 域名 → 可访问 → Search Console → 广告申请 → sitemap → GA4 → Bing”的目标。
 

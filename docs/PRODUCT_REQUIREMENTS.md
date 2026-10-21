@@ -211,9 +211,9 @@ type ReleaseEntry = {
 - [ ] 官方下载链接、镜像链接和 SHA-256 可复核。
 - [ ] Vercel 生产网址可访问，绑定域名和 HTTPS 正常。
 - [ ] Google Search Console 域名验证成功，并提交 `sitemap.xml`。
-- [ ] GA4 Realtime 能看到一次测试访问和下载点击事件。
-- [ ] Bing Webmaster 验证成功并收到 sitemap。
-- [ ] AdSense 申请材料齐全，广告代码只在审核通过后开启。
+- [ ] GA4 Realtime 能看到一次测试访问和下载点击事件（需在 Cookie 提示中同意可选统计后测试）。
+- [x] Bing Webmaster 验证成功并收到 sitemap。
+- [x] AdSense 网站已添加、验证成功并提交审核；广告单元等审核通过后再开启。
 
 ## 14. 维护节奏
 
