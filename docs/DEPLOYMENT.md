@@ -6,6 +6,8 @@
 
 当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
 
+截至本次整理，代码、GitHub 仓库和 Vercel 项目已经可用；正式域名的 DNS、Search Console、GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
+
 ## 0. 先准备好这些东西
 
 - GitHub 账号和一个新的仓库，例如 `artcraft-hub`。
@@ -39,7 +41,7 @@ cd "/Users/laohuo/Documents/ChatGPT/seo的尝试/artcraft-hub"
 npm install
 ```
 
-如果项目还没有代码，需要先用 Next.js 16 创建独立应用，再把本需求文档中的页面逐个加入。不要把旧项目的 Stripe、图片上传或图片编辑代码复制进来。
+项目代码已经在独立目录中，不需要重新创建应用。不要把旧项目的 Stripe、图片上传或图片编辑代码复制进来。
 
 ## 2. 配置网站地址和统计编号
 
