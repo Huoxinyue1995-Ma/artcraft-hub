@@ -6,7 +6,7 @@
 
 当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
 
-截至本次整理，代码、GitHub 仓库和 Vercel 项目已经可用；正式域名的 DNS、Search Console、GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
+截至本次整理，代码、GitHub 仓库、Vercel 项目和根域名 `artcraftphotocraft.space` 已可用；`www` 子域名仍需补充 CNAME（可选）。Search Console、GA4、Bing 和 AdSense 仍需按后文逐项完成。GA4 Measurement ID、AdSense 客户编号和真实联系邮箱属于外部账号信息，需要由站长在对应后台取得后再填入。
 
 ## 0. 先准备好这些东西
 
@@ -58,7 +58,7 @@ NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL=https://download.你的域名.com
 
 说明：
 
-- 本项目的正式域名是 `https://artcraftphotocraft.space`；如果你决定把 `www` 作为主地址，必须同步修改这个变量和 Vercel 的主域名设置。
+- 本项目当前的正式主地址是 `https://artcraftphotocraft.space`。如果以后决定把 `www` 作为主地址，必须同步修改这个变量和 Vercel 的主域名设置。
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` 在 GA4 数据流建立后填写。
 - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 是 Search Console 选择 URL-prefix 属性时提供的 HTML meta 验证值；使用 Domain 属性并完成 DNS TXT 验证时可以留空。
 - `NEXT_PUBLIC_BING_SITE_VERIFICATION` 是 Bing Webmaster 提供的 `msvalidate.01` 值；如果从 Search Console 导入或使用 DNS 验证，可以留空。
@@ -153,7 +153,7 @@ git push origin main
 | A | `@` | `216.198.79.1` |
 | CNAME | `www` | `3a38d4486d12f35d.vercel-dns-017.com.` |
 
-如果注册商自动补全域名后缀，名称只填写 `@` 和 `www`，不要再写完整域名。删除与旧主机冲突的 A、AAAA 或 CNAME 记录后保存。Vercel 当前会把根域名跳转到 `www`，所以两条记录都需要添加。
+如果注册商自动补全域名后缀，名称只填写 `@` 和 `www`，不要再写完整域名。删除与旧主机冲突的 A、AAAA 或 CNAME 记录后保存。当前根域名已经接到 Vercel Production，可直接访问；`www` 只有在保存上面的 CNAME 后才会通过 Vercel 验证。
 
 用电脑网络和手机流量分别打开正式域名，确认：
 
