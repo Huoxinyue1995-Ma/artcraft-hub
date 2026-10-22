@@ -6,7 +6,18 @@ type GtagWindow = Window & { gtag?: (...args: unknown[]) => void }
 
 export function ConsentBanner() {
   const [visible, setVisible] = useState(false)
-  useEffect(() => { setVisible(window.localStorage.getItem('artcraft-consent') === null) }, [])
+  useEffect(() => {
+    const saved = window.localStorage.getItem('artcraft-consent')
+    setVisible(saved === null)
+    if (saved === 'accepted') {
+      ;(window as GtagWindow).gtag?.('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'granted',
+        ad_user_data: 'granted',
+        ad_personalization: 'granted',
+      })
+    }
+  }, [])
   if (!visible) return null
   const choose = (accepted: boolean) => {
     window.localStorage.setItem('artcraft-consent', accepted ? 'accepted' : 'declined')

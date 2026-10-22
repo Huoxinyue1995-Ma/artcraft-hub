@@ -35,7 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <VercelAnalytics />
         {gaId ? <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
-          <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','${gaId}',{anonymize_ip:true});`}</Script>
+          <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());let consent='denied';try{consent=window.localStorage.getItem('artcraft-consent')==='accepted'?'granted':'denied'}catch{};gtag('consent','default',{analytics_storage:consent,ad_storage:consent,ad_user_data:consent,ad_personalization:consent});gtag('config','${gaId}',{anonymize_ip:true});`}</Script>
         </> : null}
         {adsenseId ? <Script async strategy="afterInteractive" src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsenseId}`} crossOrigin="anonymous" /> : null}
       </body>
