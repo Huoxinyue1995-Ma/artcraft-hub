@@ -139,7 +139,7 @@
 | 搜索 | 首版暂不提供站内搜索 | 先保证下载、教程和对比内容清楚；以后内容变多再增加搜索 |
 | 下载镜像 | Cloudflare R2（或兼容对象存储） | 存放经许可和校验的安装包；Vercel 只提供页面 |
 | 发布 | GitHub + Vercel | 推送主分支后自动构建 |
-| 统计 | Vercel Web Analytics + GA4 + Consent Mode | 快速查看页面 PV、访客数和来源；GA4 用于长期和广告报表；不上传安装包或用户文件 |
+| 统计 | Vercel Web Analytics + GA4 + Consent Mode | Vercel 免费版快速查看页面 PV、匿名访客数和外部来源；UTM 活动拆分继续在 GA4 查看；不上传安装包或用户文件 |
 | 搜索提交 | Google Search Console + Bing Webmaster | 验证域名并提交 sitemap |
 | 广告 | Google AdSense | 审核通过后才加载广告代码 |
 
@@ -179,7 +179,7 @@ type ReleaseEntry = {
 - 首页、下载页和安装页加入 FAQ 或 Article 结构化数据时，内容必须与页面文字一致。
 - 站内广告只在 AdSense 审核通过后开启；编辑、复制命令和下载按钮附近不放遮挡式广告。
 - `ads.txt` 内容使用 AdSense 后台给出的原文，不手写猜测。
-- Vercel Web Analytics 和 GA4 默认只记录匿名页面浏览、来源和按钮事件；先处理用户的 Cookie 选择。推广链接使用 UTM 参数区分来源渠道。
+- Vercel Web Analytics 和 GA4 默认只记录匿名页面浏览、来源和按钮事件；先处理用户的 Cookie 选择。推广链接使用 UTM 参数区分来源渠道，活动明细以 GA4 为准；Vercel Hobby 免费版只提供 Referrers，不提供 UTM Parameters 报表。
 
 ## 12. 第一版明确不做
 
@@ -212,7 +212,7 @@ type ReleaseEntry = {
 - [ ] Vercel 生产网址可访问，绑定域名和 HTTPS 正常。
 - [ ] Google Search Console 域名验证成功，并提交 `sitemap.xml`。
 - [ ] GA4 Realtime 能看到一次测试访问和下载点击事件（需在 Cookie 提示中同意可选统计后测试）。
-- [ ] Vercel Analytics 能看到每个页面的 PV、访客数和来源网站。
+- [x] Vercel Analytics 能看到每个页面的 PV、访客数和来源网站；正式域名验证已记录 `/zh`、`/zh/downloads`、`/zh/features` 和 `github.com` 来源。
 - [x] Bing Webmaster 验证成功并收到 sitemap。
 - [x] AdSense 网站已添加、验证成功并提交审核；广告单元等审核通过后再开启。
 

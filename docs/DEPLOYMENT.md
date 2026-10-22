@@ -226,7 +226,7 @@ GA4 不应记录安装包内容、用户电脑文件、账号密码或 URL 中�
 - **PV（页面浏览）**：每个页面被打开了多少次。
 - **访客数**：一段时间内大约有多少个访客。Vercel 用匿名方式估算访客数，不等同于登录用户数。
 - **热门页面**：哪个网址被打开最多。
-- **来源**：访客从哪个网站或搜索引擎来，例如 Google、Bing、GitHub 或其他外链。
+- **来源**：访客从哪个网站或搜索引擎来，例如 Google、Bing、GitHub 或其他外链。免费版这里看的是外部 Referrers。
 
 代码已经在访客点击“同意 / Accept”后加载 Vercel 的统计脚本，不需要购买服务，也不需要在代码里填写密钥。完成部署后：
 
@@ -235,7 +235,9 @@ GA4 不应记录安装包内容、用户电脑文件、账号密码或 URL 中�
 3. 用正式域名打开首页和下载页，并在 Cookie 提示中点击“同意 / Accept”。
 4. 回到 Vercel 的 Analytics 页面，查看 **Pages**、**Visitors** 和 **Referrers**。
 
-推广链接建议加上简单的 UTM 参数，方便区分同一个网站里的不同入口。例如：
+Vercel Hobby 免费版不提供 **UTM Parameters** 明细；该页会提示升级 Web Analytics Plus。需要按小红书、邮件或广告活动拆分时，继续使用 GA4 的来源报表，或在链接中保留 UTM 参数供 GA4 读取。Vercel 免费版仍会即时显示能被浏览器传递过来的外部 Referrers；部分 App 会隐藏来源，显示为 Direct/Unknown。
+
+推广链接仍建议加上简单的 UTM 参数，方便 GA4 区分同一个网站里的不同入口。例如：
 
 ```text
 https://artcraftphotocraft.space/zh?utm_source=xiaohongshu&utm_medium=social&utm_campaign=launch
@@ -309,7 +311,7 @@ Vercel 适合部署网页，不适合存放经常更新的大型安装包。镜�
 - [x] Search Console URL-prefix 资源验证成功。
 - [x] Search Console 的 `sitemap.xml` 已提交并发现 24 个网址。
 - [ ] GA4 Realtime 看得到测试访问和点击事件（需要在 Cookie 提示中同意可选统计后再测）。
-- [ ] Vercel Analytics 已在项目设置中启用，并能看到页面、访客和来源数据。
+- [x] Vercel Analytics 已在项目设置中启用，并已用正式域名验证页面、访客和 GitHub 外部来源数据。
 - [x] Bing Webmaster 已验证并提交 sitemap。
 - [x] AdSense 网站已添加、元标记验证成功并已提交审核；广告单元仍等待审核结果。
 
