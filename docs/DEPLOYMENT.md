@@ -1,12 +1,12 @@
 # Artcraft Hub 部署文档
 
-目标：从独立项目目录部署到 Vercel，绑定用户提供的域名，让网站能被 Google 和 Bing 发现，接入 GA4，并提交 Google AdSense 申请。
+目标：从独立项目目录部署到 Vercel，绑定用户提供的域名，让网站能被 Google 和 Bing 发现，接入免费的实时网站统计、GA4，并提交 Google AdSense 申请。
 
 本项目是新项目。以下命令都在 `artcraft-hub` 目录执行，不要在旧图片工具目录执行。
 
 当前项目已经创建：GitHub 仓库为 <https://github.com/Huoxinyue1995-Ma/artcraft-hub>，Vercel 项目为 <https://vercel.com/emma-8abb/artcraft-hub>，预览地址为 <https://artcraft-hub-theta.vercel.app/zh>。下面的步骤仍然保留完整流程，方便以后复用或交接。
 
-截至本次整理，代码、GitHub 仓库、Vercel 项目、根域名 `artcraftphotocraft.space`、Google Search Console、GA4、Bing Webmaster 和 AdSense 申请流程均已接通。Google 的 `sitemap.xml` 已提交成功并发现 24 个网址；Bing 已验证网站并提交同一 sitemap。`www` 子域名仍需补充 CNAME（可选）。AdSense 审核由 Google 后台继续处理，广告是否最终获批不由部署决定。
+截至本次整理，代码、GitHub 仓库、Vercel 项目、根域名 `artcraftphotocraft.space`、Google Search Console、GA4、Vercel Web Analytics、Bing Webmaster 和 AdSense 申请流程均已接通。Google 的 `sitemap.xml` 已提交成功并发现 24 个网址；Bing 已验证网站并提交同一 sitemap。`www` 子域名仍需补充 CNAME（可选）。AdSense 审核由 Google 后台继续处理，广告是否最终获批不由部署决定。
 
 当前上线状态快照：
 
@@ -18,6 +18,7 @@
 | Google Search Console | URL 前缀资源已用 HTML 标记验证 |
 | Google sitemap | `/sitemap.xml` 提交成功，已发现 24 个网址 |
 | GA4 | 已接入 `G-5D1QDLHCF2`，生产环境已部署 |
+| Vercel Web Analytics | 代码已接入；在 Vercel 项目 Analytics 页面启用后，可看页面 PV、访客数、热门页面和来源 |
 | Bing | 已验证 `artcraftphotocraft.space`，已提交 `https://artcraftphotocraft.space/sitemap.xml` |
 | AdSense | 已添加网站、元标记验证并提交审核；后台显示“正在准备” |
 
@@ -73,6 +74,7 @@ NEXT_PUBLIC_DOWNLOAD_MIRROR_BASE_URL=https://download.你的域名.com
 
 - 本项目当前的正式主地址是 `https://artcraftphotocraft.space`。如果以后决定把 `www` 作为主地址，必须同步修改这个变量和 Vercel 的主域名设置。
 - `NEXT_PUBLIC_GA_MEASUREMENT_ID` 在 GA4 数据流建立后填写。
+- Vercel Web Analytics 不需要 Measurement ID；代码会在访客同意统计后加载 `/_vercel/insights/script.js`。部署后还要在 Vercel 项目的 **Analytics** 页面点击 **Enable**。
 - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 是 Search Console 选择 URL-prefix 属性时提供的 HTML meta 验证值；使用 Domain 属性并完成 DNS TXT 验证时可以留空。
 - `NEXT_PUBLIC_BING_SITE_VERIFICATION` 是 Bing Webmaster 提供的 `msvalidate.01` 值；如果从 Search Console 导入或使用 DNS 验证，可以留空。
 - `NEXT_PUBLIC_ADSENSE_CLIENT_ID` 只有 AdSense 审核通过后才填写并开启广告组件；审核前不要加载广告脚本。
@@ -217,6 +219,32 @@ https://artcraftphotocraft.space/sitemap.xml
 
 GA4 不应记录安装包内容、用户电脑文件、账号密码或 URL 中的密钥。隐私页要说明统计用途，并提供拒绝非必要 Cookie 的入口。
 
+## 9.1 配置免费的 Vercel Web Analytics
+
+这个统计用于快速看站内数据，适合每天查看：
+
+- **PV（页面浏览）**：每个页面被打开了多少次。
+- **访客数**：一段时间内大约有多少个访客。Vercel 用匿名方式估算访客数，不等同于登录用户数。
+- **热门页面**：哪个网址被打开最多。
+- **来源**：访客从哪个网站或搜索引擎来，例如 Google、Bing、GitHub 或其他外链。
+
+代码已经在访客点击“同意 / Accept”后加载 Vercel 的统计脚本，不需要购买服务，也不需要在代码里填写密钥。完成部署后：
+
+1. 打开 [Vercel 项目](https://vercel.com/emma-8abb/artcraft-hub)。
+2. 进入 **Analytics**，选择 **Web Analytics**，点击 **Enable**。
+3. 用正式域名打开首页和下载页，并在 Cookie 提示中点击“同意 / Accept”。
+4. 回到 Vercel 的 Analytics 页面，查看 **Pages**、**Visitors** 和 **Referrers**。
+
+推广链接建议加上简单的 UTM 参数，方便区分同一个网站里的不同入口。例如：
+
+```text
+https://artcraftphotocraft.space/zh?utm_source=xiaohongshu&utm_medium=social&utm_campaign=launch
+```
+
+`utm_source` 写来源名称，`utm_medium` 写来源类型（如 `social`、`email`、`community`），`utm_campaign` 写活动名称。没有 UTM 或没有可传递来源信息的 App，可能会显示为 Direct/Unknown，这是浏览器隐私限制，不是统计故障。
+
+Vercel Web Analytics 和 GA4 的用途不同：前者更适合快速看 PV、访客和来源，后者继续用于 Google 搜索、广告和长期报表。两者都遵守网站的统计同意提示。
+
 ## 10. 提交 Bing sitemap
 
 推荐在 [Bing Webmaster Tools](https://www.bing.com/webmasters/) 使用 **Import from Google Search Console**，这样可以减少重复验证。
@@ -281,10 +309,11 @@ Vercel 适合部署网页，不适合存放经常更新的大型安装包。镜�
 - [x] Search Console URL-prefix 资源验证成功。
 - [x] Search Console 的 `sitemap.xml` 已提交并发现 24 个网址。
 - [ ] GA4 Realtime 看得到测试访问和点击事件（需要在 Cookie 提示中同意可选统计后再测）。
+- [ ] Vercel Analytics 已在项目设置中启用，并能看到页面、访客和来源数据。
 - [x] Bing Webmaster 已验证并提交 sitemap。
 - [x] AdSense 网站已添加、元标记验证成功并已提交审核；广告单元仍等待审核结果。
 
-完成这些项目后，才算达到“功能可用 → Vercel → 域名 → 可访问 → Search Console → 广告申请 → sitemap → GA4 → Bing”的目标。
+完成这些项目后，才算达到“功能可用 → Vercel → 域名 → 可访问 → Search Console → 广告申请 → sitemap → 快速统计 → GA4 → Bing”的目标。
 
 ## 14. 常见问题
 

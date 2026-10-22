@@ -10,6 +10,7 @@ export function ConsentBanner() {
   if (!visible) return null
   const choose = (accepted: boolean) => {
     window.localStorage.setItem('artcraft-consent', accepted ? 'accepted' : 'declined')
+    window.dispatchEvent(new Event('artcraft-consent-change'))
     ;(window as GtagWindow).gtag?.('consent', 'update', { analytics_storage: accepted ? 'granted' : 'denied', ad_storage: accepted ? 'granted' : 'denied', ad_user_data: accepted ? 'granted' : 'denied', ad_personalization: accepted ? 'granted' : 'denied' })
     setVisible(false)
   }

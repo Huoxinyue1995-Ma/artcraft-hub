@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Script from 'next/script'
 import { ConsentBanner } from '@/components/consent-banner'
 import { AnalyticsEvents } from '@/components/analytics-events'
+import { VercelAnalytics } from '@/components/vercel-analytics'
 import './globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <ConsentBanner />
         <AnalyticsEvents />
+        <VercelAnalytics />
         {gaId ? <>
           <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" />
           <Script id="ga4" strategy="afterInteractive">{`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)};gtag('js',new Date());gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});gtag('config','${gaId}',{anonymize_ip:true});`}</Script>
