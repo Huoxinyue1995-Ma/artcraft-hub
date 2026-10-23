@@ -67,7 +67,7 @@ export function Notice({ lang }: { lang: Lang }) {
   return <div className="notice"><span className="notice-dot" />{lang === 'zh' ? '独立资料站 · 非 Artcraft 或 Adobe 官方网站' : 'Independent resource · not an official Artcraft or Adobe website'}</div>
 }
 
-export function PageIntro({ lang, eyebrow, title, description }: { lang: Lang; eyebrow: string; title: string; description: string }) {
+export function PageIntro({ lang, eyebrow, title, description }: { lang: Lang; eyebrow: string; title: React.ReactNode; description: string }) {
   return <div className="page-intro"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1><p className="lead">{description}</p></div>
 }
 

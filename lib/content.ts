@@ -113,18 +113,18 @@ export const featureData = {
 
 export const adobeRows = {
   zh: [
-    ['Artcraft', '桌面与浏览器 AI 创作工具', '官方页面显示可免费开始；价格以官方页面为准', '中等：先看教程再试', '想把 AI、2D、3D 放在一起尝试的人'],
-    ['Photoshop', '图片编辑与合成', '订阅制（Adobe 官方价格会变动）', '中等到较高', '修图、精修、合成和设计从业者'],
-    ['Illustrator', '矢量图形与插画', '订阅制（Adobe 官方价格会变动）', '中等到较高', 'Logo、图标、插画和印刷设计'],
-    ['Premiere Pro', '视频剪辑', '订阅制（Adobe 官方价格会变动）', '中等', '剪辑长视频、短视频和课程'],
-    ['After Effects', '动态图形与视觉特效', '订阅制（Adobe 官方价格会变动）', '较高', '动画、特效和动态图形'],
+    ['Artcraft', 'v0.41.0', '桌面与浏览器 AI 创作工具', '官方页面显示可免费开始；价格以官方页面为准', '中等：先看教程再试', '想把 AI、2D、3D 放在一起尝试的人'],
+    ['Photoshop', '27.11', '图片编辑与合成', '订阅制（Adobe 官方价格会变动）', '中等到较高', '修图、精修、合成和设计从业者'],
+    ['Illustrator', '30.2.1', '矢量图形与插画', '订阅制（Adobe 官方价格会变动）', '中等到较高', 'Logo、图标、插画和印刷设计'],
+    ['Premiere Pro', '26.0.1', '视频剪辑', '订阅制（Adobe 官方价格会变动）', '中等', '剪辑长视频、短视频和课程'],
+    ['After Effects', '26.0', '动态图形与视觉特效', '订阅制（Adobe 官方价格会变动）', '较高', '动画、特效和动态图形'],
   ],
   en: [
-    ['Artcraft', 'Desktop and browser AI creative tool', 'Free to start; check the official pricing page', 'Medium: follow a guide first', 'People who want to explore AI, 2D, and 3D together'],
-    ['Photoshop', 'Image editing & compositing', 'Subscription (Adobe pricing changes)', 'Medium to high', 'Retouching, compositing, and design work'],
-    ['Illustrator', 'Vector graphics & illustration', 'Subscription (Adobe pricing changes)', 'Medium to high', 'Logos, icons, illustration, and print design'],
-    ['Premiere Pro', 'Video editing', 'Subscription (Adobe pricing changes)', 'Medium', 'Long-form, short-form, and course videos'],
-    ['After Effects', 'Motion graphics & VFX', 'Subscription (Adobe pricing changes)', 'High', 'Animation, effects, and motion design'],
+    ['Artcraft', 'v0.41.0', 'Desktop and browser AI creative tool', 'Free to start; check the official pricing page', 'Medium: follow a guide first', 'People who want to explore AI, 2D, and 3D together'],
+    ['Photoshop', '27.11', 'Image editing & compositing', 'Subscription (Adobe pricing changes)', 'Medium to high', 'Retouching, compositing, and design work'],
+    ['Illustrator', '30.2.1', 'Vector graphics & illustration', 'Subscription (Adobe pricing changes)', 'Medium to high', 'Logos, icons, illustration, and print design'],
+    ['Premiere Pro', '26.0.1', 'Video editing', 'Subscription (Adobe pricing changes)', 'Medium', 'Long-form, short-form, and course videos'],
+    ['After Effects', '26.0', 'Motion graphics & VFX', 'Subscription (Adobe pricing changes)', 'High', 'Animation, effects, and motion design'],
   ],
 } as const
 
