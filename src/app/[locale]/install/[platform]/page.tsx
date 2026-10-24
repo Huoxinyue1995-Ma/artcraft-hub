@@ -6,7 +6,7 @@ import { PageIntro, SourceLine } from '@/components/site-shell'
 import { getLang, OFFICIAL, pageMetadata } from '@/lib/content'
 
 const platforms = ['windows', 'macos', 'linux'] as const
-export function generateStaticParams() { return ['zh', 'en'].flatMap((locale) => platforms.map((platform) => ({ locale, platform }))) }
+export function generateStaticParams() { return platforms.map((platform) => ({ locale: 'en', platform })) }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; platform: string }> }): Promise<Metadata> {
   const { locale, platform } = await params

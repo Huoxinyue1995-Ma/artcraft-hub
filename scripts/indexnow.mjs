@@ -4,7 +4,7 @@
  *
  * Usage:
  *   npm run indexnow                          # submit every URL in the live sitemap
- *   npm run indexnow -- /zh/compare/adobe     # submit only these paths (zh/en both if no locale)
+ *   npm run indexnow -- /compare/adobe        # submit only these paths (/en is added automatically)
  *   npm run indexnow -- --dry-run             # print what would be sent
  *
  * The key file public/<KEY>.txt must already be deployed before submitting.
@@ -30,8 +30,8 @@ async function urlsFromSitemap() {
 function urlsFromPaths(list) {
   return list.flatMap((p) => {
     const clean = p.startsWith('/') ? p : `/${p}`
-    if (/^\/(zh|en)(\/|$)/.test(clean)) return [`${SITE}${clean}`]
-    return [`${SITE}/zh${clean === '/' ? '' : clean}`, `${SITE}/en${clean === '/' ? '' : clean}`]
+    if (/^\/en(\/|$)/.test(clean)) return [`${SITE}${clean}`]
+    return [`${SITE}/en${clean === '/' ? '' : clean}`]
   })
 }
 

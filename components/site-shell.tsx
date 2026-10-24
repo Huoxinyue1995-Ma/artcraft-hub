@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { ArrowUpRight, Github, Sparkles } from 'lucide-react'
 import { getLang, navItems, otherLang, type Lang, OFFICIAL, sourceNote } from '@/lib/content'
-import { LanguageSwitcher } from '@/components/language-switcher'
 
 export function SiteHeader({ lang }: { lang: Lang }) {
   const items = navItems(lang)
@@ -18,7 +17,6 @@ export function SiteHeader({ lang }: { lang: Lang }) {
         </nav>
         <div className="header-actions">
           <a className="icon-link" href={OFFICIAL.github} target="_blank" rel="noreferrer" aria-label="Artcraft on GitHub" data-ga-event="official_github_click"><Github size={17} /></a>
-          <LanguageSwitcher lang={lang} />
         </div>
       </div>
     </header>

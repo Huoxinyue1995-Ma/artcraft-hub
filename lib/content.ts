@@ -37,7 +37,6 @@ export function pageMetadata(lang: Lang, path: string, title: string, descriptio
     description,
     alternates: {
       canonical: `/${lang}${clean}`,
-      languages: { 'zh-CN': `/zh${clean}`, en: `/en${clean}` },
     },
   }
 }
@@ -73,8 +72,8 @@ export const pageMeta = {
     description: '整理 Artcraft 官方下载、安装教程、功能说明，以及与 Adobe 套件的简单对比。非官方资料站。',
   },
   en: {
-    title: 'Artcraft Hub | Downloads, Setup & Adobe Comparison',
-    description: 'A beginner-friendly guide to official Artcraft downloads, setup, features, and a simple Adobe comparison. Independent resource site.',
+    title: 'Artcraft Download & Launcher for Windows, macOS and Linux',
+    description: 'Official Artcraft download links for Windows, macOS and Linux: the ArtCraft AI app, the ArtCraft Launcher, and every Craft app, with versions and GitHub links. Independent guide.',
   },
 } as const
 

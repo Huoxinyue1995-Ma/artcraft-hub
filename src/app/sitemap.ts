@@ -20,7 +20,7 @@ const pages: Array<{ path: string; updated?: string }> = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'
-  return ['zh', 'en'].flatMap((locale) => pages.map(({ path, updated }) => ({
+  return ['en'].flatMap((locale) => pages.map(({ path, updated }) => ({
     url: `${base}/${locale}${path}`,
     lastModified: new Date(updated || DEFAULT_UPDATED),
     changeFrequency: 'monthly' as const,

@@ -25,5 +25,5 @@ export function ConsentBanner() {
     ;(window as GtagWindow).gtag?.('consent', 'update', { analytics_storage: accepted ? 'granted' : 'denied', ad_storage: accepted ? 'granted' : 'denied', ad_user_data: accepted ? 'granted' : 'denied', ad_personalization: accepted ? 'granted' : 'denied' })
     setVisible(false)
   }
-  return <aside className="consent-banner" aria-label="Cookie choices"><p>可选统计用于了解访问和下载情况；你也可以拒绝。<br />Optional analytics help us understand visits and downloads.</p><div><button onClick={() => choose(false)}>拒绝 / Decline</button><button className="consent-accept" onClick={() => choose(true)}>同意 / Accept</button></div></aside>
+  return <aside className="consent-banner" aria-label="Cookie choices"><p>Optional analytics help us understand visits and downloads. You can decline.</p><div><button onClick={() => choose(false)}>Decline</button><button className="consent-accept" onClick={() => choose(true)}>Accept</button></div></aside>
 }

@@ -6,7 +6,8 @@ import { getLang, OFFICIAL, pageMeta, pageMetadata, sourceNote } from '@/lib/con
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const lang = getLang((await params).locale)
-  return pageMetadata(lang, '', pageMeta[lang].title, pageMeta[lang].description)
+  // Absolute title: the home page skips the "· Artcraft Hub" suffix so the keyword-led title stays short.
+  return { ...pageMetadata(lang, '', pageMeta[lang].title, pageMeta[lang].description), title: { absolute: pageMeta[lang].title } }
 }
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
@@ -26,13 +27,13 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   return <div className="container page-space">
     <div className="hero-grid">
       <section className="hero-copy">
-        <p className="eyebrow">{zh ? 'ARTCRAFT / BEGINNER GUIDE' : 'ARTCRAFT / BEGINNER GUIDE'}</p>
-        <h1>{zh ? <>先看懂，再开始创作。<br /><span>Artcraft 的新手入口。</span></> : <>Understand it first.<br /><span>Then start creating with Artcraft.</span></>}</h1>
-        <p className="lead">{zh ? '一个独立维护的资料站：整理官方下载、安装步骤、功能边界，以及和 Adobe 套件的清楚对比。' : 'An independent guide to official downloads, setup steps, feature boundaries, and a clear Adobe comparison.'}</p>
+        <p className="eyebrow">ARTCRAFT / INDEPENDENT GUIDE</p>
+        <h1>Artcraft Download <span>&amp; Launcher</span></h1>
+        <p className="lead">Official links for Windows, macOS and Linux — the ArtCraft AI app and the ArtCraft Launcher, in one place.</p>
         <div className="button-row"><Link className="button button-dark" href={`/${lang}/downloads`}>{zh ? '查看官方下载' : 'See official downloads'} <ArrowUpRight size={16} /></Link><a className="text-link" href={OFFICIAL.github} target="_blank" rel="noreferrer">{zh ? '打开官方 GitHub' : 'Open official GitHub'} <ArrowUpRight size={15} /></a></div>
         <p className="tiny-note">{sourceNote(lang)}</p>
       </section>
-      <aside className="hero-card"><div className="orb"><Sparkles size={30} /></div><p className="eyebrow">{zh ? 'A SIMPLE START' : 'A SIMPLE START'}</p><h2>{zh ? '把复杂的第一步，拆成四个入口。' : 'Four clear doors into a complex first step.'}</h2><div className="hero-list"><span><Play size={14} /> {zh ? '官方来源' : 'Official sources'}</span><span><Play size={14} /> {zh ? '按系统安装' : 'Platform setup'}</span><span><Play size={14} /> {zh ? '功能与边界' : 'Features & limits'}</span></div></aside>
+      <aside className="hero-card"><div className="orb"><Download size={30} /></div><p className="eyebrow">QUICK DOWNLOAD</p><h2>Two official downloads, one page.</h2><div className="hero-list"><span><Play size={14} /> ArtCraft AI app · Windows &amp; macOS</span><span><Play size={14} /> ArtCraft Launcher · Windows, macOS, Linux</span><span><Play size={14} /> Links to getartcraft.com &amp; GitHub</span></div></aside>
     </div>
     <OfficialCallout lang={lang} />
     <section className="section-block"><div className="section-heading"><div><p className="eyebrow">{zh ? '从这里开始' : 'START HERE'}</p><h2>{zh ? '你现在最需要哪一步？' : 'What do you need first?'}</h2></div><span className="section-index">01 — 04</span></div><div className="card-grid">{cards.map((card) => <InfoCard key={card.title} {...card} />)}</div></section>
