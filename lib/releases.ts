@@ -17,7 +17,8 @@ const GH = 'https://github.com/storytold'
 
 export type Platform = 'windows' | 'macos' | 'linux'
 
-export type DownloadFile = { platform: Platform; label: string; file: string; url: string }
+/** sha256 is GitHub's own digest of the release asset (64 lowercase hex chars), when available. */
+export type DownloadFile = { platform: Platform; label: string; file: string; url: string; sha256?: string }
 
 export type ReleaseInfo = {
   version: string
@@ -95,6 +96,13 @@ const FALLBACK_VERSIONS: Record<string, { version: string; publishedAt: string }
   gridcraft: { version: '0.11.1', publishedAt: '2026-10-22' },
 }
 
+/** GitHub's own SHA-256 digests for the fallback ArtCraft release (copied from the release API, not typed by hand). */
+const ARTCRAFT_FALLBACK_SHA256: Record<string, string> = {
+  'ArtCraft_0.41.0_x64-setup.exe': 'cb15da474ae36a7a7f930a6e9916be2794e7cc84c3340b531c38eabc82f4363e',
+  'ArtCraft_0.41.0_x64_en-US.msi': '255f963ba8acb799b231ac23a5ef04ca157a8d26f9b9b279b3e55a59db29be77',
+  'ArtCraft_0.41.0_universal.dmg': '3cf1df2e56345e603c5d0180e5b563dd5eca25d9e3c3959d9554012f510916c1',
+}
+
 /* ---------------- File selection ---------------- */
 
 type Rule = { platform: Platform; label: string; match: RegExp }
@@ -123,7 +131,7 @@ function fallbackFiles(repo: string, assetStem: string, version: string, tag: st
       { platform: 'windows', label: 'Windows installer (.exe)', file: `ArtCraft_${version}_x64-setup.exe` },
       { platform: 'windows', label: 'Windows installer (.msi)', file: `ArtCraft_${version}_x64_en-US.msi` },
       { platform: 'macos', label: 'macOS universal (.dmg)', file: `ArtCraft_${version}_universal.dmg` },
-    ].map((f) => ({ ...f, platform: f.platform as Platform, url: `${base}/${f.file}` }))
+    ].map((f) => ({ ...f, platform: f.platform as Platform, url: `${base}/${f.file}`, sha256: ARTCRAFT_FALLBACK_SHA256[f.file] }))
   }
   const files: Array<[Platform, string, string]> = [
     ['windows', 'Windows x64 (.msi)', `${assetStem}-${version}-windows-x64.msi`],
@@ -138,7 +146,13 @@ function fallbackFiles(repo: string, assetStem: string, version: string, tag: st
 
 /* ---------------- GitHub fetch ---------------- */
 
-type GhRelease = { tag_name: string; published_at: string; html_url: string; assets: Array<{ name: string; browser_download_url: string }> }
+type GhRelease = { tag_name: string; published_at: string; html_url: string; assets: Array<{ name: string; browser_download_url: string; digest?: string | null }> }
+
+/** GitHub reports asset digests as "sha256:<64 hex>". Anything else is ignored rather than shown. */
+function sha256FromDigest(digest: string | null | undefined): string | undefined {
+  const m = /^sha256:([0-9a-f]{64})$/.exec(digest ?? '')
+  return m ? m[1] : undefined
+}
 
 async function fetchLatest(repo: string): Promise<GhRelease | null> {
   try {
@@ -178,7 +192,7 @@ async function getRelease(repo: string, assetStem: string, rules: Rule[]): Promi
     const asset = gh.assets.find((a) => rule.match.test(a.name))
     // Only official GitHub release-asset URLs are accepted.
     if (asset && asset.browser_download_url.startsWith(`${GH}/${repo}/releases/download/`)) {
-      files.push({ platform: rule.platform, label: rule.label, file: asset.name, url: asset.browser_download_url })
+      files.push({ platform: rule.platform, label: rule.label, file: asset.name, url: asset.browser_download_url, sha256: sha256FromDigest(asset.digest) })
     }
   }
   if (files.length === 0) return fallback

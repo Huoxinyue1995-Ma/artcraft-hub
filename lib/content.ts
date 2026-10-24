@@ -17,19 +17,6 @@ export const OFFICIAL = {
   licenseApache: 'https://github.com/storytold/artcraft/blob/main/LICENSE-APACHE',
 }
 
-export const currentRelease = {
-  version: 'v0.41.0',
-  releasedAt: '2026-09-26',
-  source: 'https://github.com/storytold/artcraft/releases/tag/artcraft-v0.41.0',
-}
-
-export const releaseAssets = [
-  { platform: 'Windows 10 64-bit+', file: 'ArtCraft_0.41.0_x64-setup.exe', sha256: 'cb15da474ae36a7a7f930a6e9916be2794e7cc84c3340b531c38eabc82f4363e', url: 'https://github.com/storytold/artcraft/releases/download/artcraft-v0.41.0/ArtCraft_0.41.0_x64-setup.exe' },
-  { platform: 'Windows 10 64-bit+', file: 'ArtCraft_0.41.0_x64_en-US.msi', sha256: '255f963ba8acb799b231ac23a5ef04ca157a8d26f9b9b279b3e55a59db29be77', url: 'https://github.com/storytold/artcraft/releases/download/artcraft-v0.41.0/ArtCraft_0.41.0_x64_en-US.msi' },
-  { platform: 'macOS 12+', file: 'ArtCraft_0.41.0_universal.dmg', sha256: '3cf1df2e56345e603c5d0180e5b563dd5eca25d9e3c3959d9554012f510916c', url: 'https://github.com/storytold/artcraft/releases/download/artcraft-v0.41.0/ArtCraft_0.41.0_universal.dmg' },
-  { platform: 'macOS 12+', file: 'ArtCraft_universal.app.tar.gz', sha256: '812d7b4e570df95dee769761b6afc53d82cbb1e4911aed360d9bd23fc830d673', url: 'https://github.com/storytold/artcraft/releases/download/artcraft-v0.41.0/ArtCraft_universal.app.tar.gz' },
-] as const
-
 export function pageMetadata(lang: Lang, path: string, title: string, description: string) {
   const clean = path === '' || path === '/' ? '' : (path.startsWith('/') ? path : `/${path}`)
   return {

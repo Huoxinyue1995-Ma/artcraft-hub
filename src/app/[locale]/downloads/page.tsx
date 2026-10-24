@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Apple, ArrowUpRight, Github, Globe, Monitor, Terminal } from 'lucide-react'
 import { Callout } from '@/components/callout'
 import { PageIntro, SourceLine } from '@/components/site-shell'
-import { getLang, OFFICIAL, pageMetadata, releaseAssets } from '@/lib/content'
+import { getLang, OFFICIAL, pageMetadata } from '@/lib/content'
 import {
   ARTCRAFT_APP, LAUNCHER, RELEASES_CHECKED_AT, craftAppLinks,
   getArtcraftRelease, getCraftAppReleases, getLauncherRelease,
@@ -40,7 +40,7 @@ function FileLinks({ files, event, compact = false }: { files: DownloadFile[]; e
             <span className="dl-platform-name">{platformMeta[p].icon} {platformMeta[p].name}</span>
             <div className="dl-platform-links">
               {list.map((f) => (
-                <a key={f.file} href={f.url} rel="noreferrer" data-ga-event={event} title={f.file}>
+                <a key={f.file} href={f.url} rel="noreferrer" data-ga-event={event} title={f.sha256 ? `${f.file}\nSHA-256: ${f.sha256}` : f.file}>
                   {compact ? f.label.replace(/^(Windows|macOS|Linux) /, '') : f.label} <ArrowUpRight size={13} />
                 </a>
               ))}
@@ -58,7 +58,8 @@ export default async function DownloadsPage({ params }: { params: Promise<{ loca
   const checkedNote = artcraft.live && launcher.live && craftApps.every((c) => c.release.live)
     ? 'Versions are read from each official GitHub release and refreshed every few hours.'
     : `Some versions could not be refreshed from GitHub and show the last manual check (${RELEASES_CHECKED_AT}).`
-  const artcraftSha = releaseAssets.filter((a) => a.file.includes(artcraft.version))
+  // Checksums come from GitHub's own digest of each release asset, so they update with each new version.
+  const artcraftSha = artcraft.files.filter((f) => f.sha256)
 
   return (
     <div className="container page-space">
@@ -96,7 +97,8 @@ export default async function DownloadsPage({ params }: { params: Promise<{ loca
         {artcraftSha.length > 0 ? (
           <details className="dl-checksums">
             <summary>SHA-256 checksums for v{artcraft.version}</summary>
-            <div className="asset-list">{artcraftSha.map((a) => <div className="asset-row" key={a.file}><div><strong>{a.file}</strong><span>{a.platform}</span></div><code>{a.sha256}</code></div>)}</div>
+            <div className="asset-list">{artcraftSha.map((a) => <div className="asset-row" key={a.file}><div><strong>{a.file}</strong><span>{a.label}</span></div><code>{a.sha256}</code></div>)}</div>
+            <p className="tiny-note">SHA-256 digests are published by GitHub for each release file. On macOS or Linux, check a download with <code>shasum -a 256 &lt;file&gt;</code>; on Windows, <code>certutil -hashfile &lt;file&gt; SHA256</code>.</p>
           </details>
         ) : null}
         <p className="tiny-note">The ArtCraft AI app has no built-in updater in v{artcraft.version}. To update, download the new version from the links above. The ArtCraft Launcher below does not manage this app.</p>
@@ -116,6 +118,12 @@ export default async function DownloadsPage({ params }: { params: Promise<{ loca
             <h3>ArtCraft Launcher <span>v{launcher.version}</span></h3>
             <p>One app to install, update and open all 13 Craft apps. It picks the right build for your system, checks every download against its SHA-256 checksum, and tells you when an update is out. Released {launcher.publishedAt}.</p>
             <FileLinks files={launcher.files} event="launcher_download" />
+            {launcher.files.some((f) => f.sha256) ? (
+              <details className="dl-checksums">
+                <summary>SHA-256 checksums for v{launcher.version}</summary>
+                <div className="asset-list">{launcher.files.filter((f) => f.sha256).map((f) => <div className="asset-row" key={f.file}><div><strong>{f.file}</strong><span>{f.label}</span></div><code>{f.sha256}</code></div>)}</div>
+              </details>
+            ) : null}
           </div>
           <div className="dl-side">
             <a className="button button-dark" href={LAUNCHER.releases} target="_blank" rel="noreferrer" data-ga-event="launcher_release_click">All Launcher files <ArrowUpRight size={15} /></a>
