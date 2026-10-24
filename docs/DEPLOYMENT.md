@@ -259,6 +259,23 @@ Vercel Web Analytics 和 GA4 的用途不同：前者更适合快速看 PV、访
 
 看到 sitemap 状态为已提交或成功读取，就完成 Bing 这一步。
 
+## 10.1 用 IndexNow 主动通知搜索引擎
+
+IndexNow 会在页面更新后立即通知 Bing、Yandex、Seznam、Naver 等搜索引擎，不用等它们自己来抓取。Google 和百度不支持 IndexNow。
+
+- 密钥文件：`public/91d9934174636bae5bd0f1bfe856884e.txt`，线上地址 `https://artcraftphotocraft.space/91d9934174636bae5bd0f1bfe856884e.txt`。不要删除或修改。
+- 脚本：`scripts/indexnow.mjs`。
+
+常用命令（在 `artcraft-hub` 目录执行，**等 Vercel 部署完成后**再运行）：
+
+```bash
+npm run indexnow                          # 提交 sitemap 里的全部页面
+npm run indexnow -- /compare/adobe        # 只提交改过的页面（自动包含中英文）
+npm run indexnow -- --dry-run             # 只显示会提交哪些网址，不发送
+```
+
+返回 `200` 或 `202` 都表示成功（第一次通常是 `202`，意思是密钥还在验证）。不要对没有改动的页面反复提交。页面内容有实质更新时，顺便把 `src/app/sitemap.ts` 里对应页面的 `updated` 日期改成当天。
+
 ## 11. 准备 Google AdSense
 
 本项目选择的是 AdSense（在网站展示广告赚钱），不是 Google Ads（花钱推广网站）。
