@@ -6,7 +6,7 @@ const DEFAULT_UPDATED = '2026-10-20'
 const pages: Array<{ path: string; updated?: string }> = [
   { path: '', updated: '2026-10-24' },
   { path: '/downloads', updated: '2026-10-24' },
-  { path: '/features' },
+  { path: '/features', updated: '2026-10-24' },
   { path: '/faq' },
   { path: '/about' },
   { path: '/contact' },

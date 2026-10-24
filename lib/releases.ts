@@ -33,23 +33,25 @@ export type CraftApp = {
   purpose: string
   /** Closest familiar app, for orientation only. */
   similarTo: string
+  /** Development stage as stated in the app's own README (checked RELEASES_CHECKED_AT). */
+  stage: 'pre-alpha' | 'early development' | 'early alpha' | 'alpha'
 }
 
 /** The Craft App Suite, in the order used by getartcraft.com/apps and the official launcher. */
 export const CRAFT_APPS: CraftApp[] = [
-  { id: 'photocraft', name: 'PhotoCraft', purpose: 'Image editing with layers, masks, type and PSD files', similarTo: 'Photoshop' },
-  { id: 'vectorcraft', name: 'VectorCraft', purpose: 'Vector illustration', similarTo: 'Illustrator' },
-  { id: 'filmcraft', name: 'FilmCraft', purpose: 'Video editing, color and sound', similarTo: 'Premiere Pro' },
-  { id: 'lightcraft', name: 'LightCraft', purpose: 'Photo library and raw development', similarTo: 'Lightroom' },
-  { id: 'pdfcraft', name: 'PdfCraft', purpose: 'Reading, organizing and protecting PDFs', similarTo: 'Acrobat' },
-  { id: 'effectcraft', name: 'EffectCraft', purpose: 'Motion graphics and visual effects', similarTo: 'After Effects' },
-  { id: 'designcraft', name: 'DesignCraft', purpose: 'Page layout and publishing', similarTo: 'InDesign' },
-  { id: 'figcraft', name: 'FigCraft', purpose: 'Interface design and prototyping', similarTo: 'Figma' },
-  { id: 'wordcraft', name: 'WordCraft', purpose: 'Word processing and documents', similarTo: 'Microsoft Word' },
-  { id: 'soundcraft', name: 'SoundCraft', purpose: 'Audio recording and editing', similarTo: 'Pro Tools' },
-  { id: 'deckcraft', name: 'DeckCraft', purpose: 'Presentations and slide decks', similarTo: 'PowerPoint' },
-  { id: 'cadcraft', name: 'CADCraft', purpose: 'Computer-aided design and drafting', similarTo: 'AutoCAD' },
-  { id: 'gridcraft', name: 'GridCraft', purpose: 'Spreadsheets and data', similarTo: 'Excel' },
+  { id: 'photocraft', name: 'PhotoCraft', purpose: 'Image editing with layers, masks, type and PSD files', similarTo: 'Photoshop', stage: 'early alpha' },
+  { id: 'vectorcraft', name: 'VectorCraft', purpose: 'Vector illustration', similarTo: 'Illustrator', stage: 'alpha' },
+  { id: 'filmcraft', name: 'FilmCraft', purpose: 'Video editing, color and sound', similarTo: 'Premiere Pro', stage: 'alpha' },
+  { id: 'lightcraft', name: 'LightCraft', purpose: 'Photo library and raw development', similarTo: 'Lightroom', stage: 'alpha' },
+  { id: 'pdfcraft', name: 'PdfCraft', purpose: 'Reading, organizing and protecting PDFs', similarTo: 'Acrobat', stage: 'alpha' },
+  { id: 'effectcraft', name: 'EffectCraft', purpose: 'Motion graphics and visual effects', similarTo: 'After Effects', stage: 'alpha' },
+  { id: 'designcraft', name: 'DesignCraft', purpose: 'Page layout and publishing', similarTo: 'InDesign', stage: 'pre-alpha' },
+  { id: 'figcraft', name: 'FigCraft', purpose: 'Interface design and prototyping', similarTo: 'Figma', stage: 'early alpha' },
+  { id: 'wordcraft', name: 'WordCraft', purpose: 'Word processing and documents', similarTo: 'Microsoft Word', stage: 'alpha' },
+  { id: 'soundcraft', name: 'SoundCraft', purpose: 'Audio recording and editing', similarTo: 'Pro Tools', stage: 'pre-alpha' },
+  { id: 'deckcraft', name: 'DeckCraft', purpose: 'Presentations and slide decks', similarTo: 'PowerPoint', stage: 'early development' },
+  { id: 'cadcraft', name: 'CADCraft', purpose: 'Computer-aided design and drafting', similarTo: 'AutoCAD', stage: 'early development' },
+  { id: 'gridcraft', name: 'GridCraft', purpose: 'Spreadsheets and data', similarTo: 'Excel', stage: 'alpha' },
 ]
 
 export const craftAppLinks = (id: string) => ({

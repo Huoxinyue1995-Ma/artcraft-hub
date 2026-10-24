@@ -77,38 +77,16 @@ export const pageMeta = {
   },
 } as const
 
-export const sourceNote = (lang: Lang) =>
-  lang === 'zh'
-    ? '资料来源：Artcraft 官方 GitHub、Releases、getartcraft.com 与 Adobe 官方页面。最后检查：2026-10-20。本站与 Artcraft 团队、Adobe 均无隶属关系。'
-    : 'Sources: the official Artcraft GitHub, Releases, getartcraft.com, and Adobe pages. Last checked: 2026-10-20. This site is independent from Artcraft and Adobe.'
+/** Site-wide "last checked" date. Bump it whenever the facts on the site are re-verified. */
+export const SITE_CHECKED_AT = '2026-10-24'
+
+export const sourceNote = (_lang: Lang) =>
+  `Sources: the official ArtCraft and Craft app repositories on GitHub (github.com/storytold), their releases, getartcraft.com, and Adobe pages. Last checked: ${SITE_CHECKED_AT}. This site is independent from ArtCraft and Adobe.`
 
 export function withLang(lang: Lang, path: string) {
   const clean = path.startsWith('/') ? path : `/${path}`
   return `/${lang}${clean}`
 }
-
-export const featureData = {
-  zh: [
-    { icon: '✦', title: '2D 合成', body: '把图像、文字和效果放在同一个画布里，适合快速做视觉草稿。' },
-    { icon: '◇', title: '3D 合成', body: '把 3D 内容和画面组合起来，探索更立体的创作方式。' },
-    { icon: '◌', title: '角色姿态与身份', body: '调整角色姿态，也可以用参考角色帮助保持身份和画面方向。' },
-    { icon: '◎', title: '场景搭建', body: '在同一场景里安排背景、前景、道具和镜头位置，再继续创作。' },
-    { icon: '▧', title: '背景移除与画布编辑', body: '移除背景，用绘画、蒙版和局部修改引导图像变化。' },
-    { icon: '↗', title: '图像转 3D 网格', body: '尝试把一张图变成立体网格，方便继续做 3D 实验。' },
-    { icon: '✺', title: '文生图与提示词编辑', body: '用文字描述想法，也可以继续调整已有画面。' },
-    { icon: '▶', title: '图生视频', body: '用视频模型把一张图做成动态片段，并继续控制创作方向。' },
-  ],
-  en: [
-    { icon: '✦', title: '2D compositing', body: 'Bring images, text, and effects together on one canvas for quick visual drafts.' },
-    { icon: '◇', title: '3D compositing', body: 'Mix 3D content with your scene and explore a more dimensional workflow.' },
-    { icon: '◌', title: 'Character pose & identity', body: 'Pose a character and use references to guide identity and shot direction.' },
-    { icon: '◎', title: 'Scene blocking', body: 'Arrange backdrops, foregrounds, props, and camera placement before generating.' },
-    { icon: '▧', title: 'Background & canvas editing', body: 'Remove backgrounds and use drawing, masks, and local edits to guide changes.' },
-    { icon: '↗', title: 'Image to 3D mesh', body: 'Experiment with turning a picture into a 3D mesh for further exploration.' },
-    { icon: '✺', title: 'Text-to-image editing', body: 'Describe an idea in words, then keep refining an existing image with prompts.' },
-    { icon: '▶', title: 'Image to video', body: 'Animate an image with video models while keeping control over the creative direction.' },
-  ],
-} as const
 
 export const adobeLinks = {
   Photoshop: 'https://www.adobe.com/products/photoshop.html',

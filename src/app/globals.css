@@ -73,6 +73,11 @@ a:hover { color:var(--blue); }
 /* Home: two-part download block */
 .home-dl { display:grid; grid-template-columns:1fr 1fr; gap:15px; }.home-dl-card { display:flex; flex-direction:column; gap:10px; padding:26px; border:1px solid var(--line); border-radius:22px; background:#fff; transition:transform .2s,box-shadow .2s; }.home-dl-card:hover { transform:translateY(-3px); box-shadow:var(--shadow); color:inherit; }.home-dl-card .pill { align-self:flex-start; }.home-dl-card h2 { margin:4px 0 0; font-size:26px; letter-spacing:-.04em; }.home-dl-card h2 span { color:var(--muted); font-size:14px; font-weight:600; letter-spacing:0; margin-left:6px; }.home-dl-card p { margin:0; color:var(--muted); font-size:14px; }.home-dl-card .text-link { margin-top:auto; }.home-dl-note { margin-top:12px; }
 @media (max-width:760px) { .home-dl { grid-template-columns:1fr; } }
+/* Features page: Craft app cards */
+.craft-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }.craft-card { display:flex; flex-direction:column; gap:6px; padding:20px; border:1px solid var(--line); border-radius:18px; background:#fff; }.craft-card-top { display:flex; justify-content:space-between; align-items:center; gap:10px; }.craft-card h3 { margin:0; font-size:19px; letter-spacing:-.03em; }.craft-card .pill { white-space:nowrap; }.craft-card p { margin:0; font-size:13px; color:#3f454b; }.craft-card .craft-like { color:var(--muted); font-size:12px; }.craft-card footer { display:flex; gap:14px; margin-top:auto; padding-top:10px; font-size:12px; font-weight:750; }.craft-card footer a { display:inline-flex; align-items:center; gap:3px; color:var(--blue); }
+.tiny-note a { color:var(--blue); text-decoration:underline; text-underline-offset:2px; }
+@media (max-width:900px) { .craft-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px) { .craft-grid { grid-template-columns:1fr; } }
 /* Downloads page */
 .dl-jump { display:flex; flex-wrap:wrap; gap:10px; margin:-20px 0 10px; }.dl-jump a { display:inline-flex; gap:10px; align-items:center; padding:10px 16px; border:1px solid var(--line); border-radius:999px; background:#fff; font-size:13px; font-weight:750; }.dl-jump a span { color:var(--muted); font-weight:600; }
 .dl-part { scroll-margin-top:90px; }
