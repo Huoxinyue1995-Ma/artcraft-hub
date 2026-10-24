@@ -1,132 +1,144 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { ArrowUpRight, Check, Minus } from 'lucide-react'
 import { PageIntro, SourceLine } from '@/components/site-shell'
-import { adobeLinks, adobeRows, getLang, OFFICIAL, pageMetadata } from '@/lib/content'
-import { ADOBE_VERSIONS, ARTCRAFT_VERSION, COMPARE_CHECKED_AT, adobeOnly, artcraftLeads, moduleRows, type AdobeApp } from '@/lib/compare-adobe'
+import { adobeLinks, getLang, pageMetadata } from '@/lib/content'
+import {
+  ADOBE_VERSIONS, ARTCRAFT_VERSION, COMPARE_CHECKED_AT,
+  adobeLeads, artcraftLeads, craftMatches, parityLink,
+} from '@/lib/compare-adobe'
+import { craftAppLinks } from '@/lib/releases'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const lang = getLang((await params).locale)
   return pageMetadata(
     lang,
     '/compare/adobe',
-    lang === 'zh' ? 'Artcraft 与 Adobe 逐模块对比（v0.41.0 vs Photoshop 27.11 等）' : 'Artcraft vs Adobe, module by module (v0.41.0 vs Photoshop 27.11 and more)',
-    lang === 'zh'
-      ? '按模块对比 Artcraft v0.41.0 与 Photoshop、Illustrator、Premiere Pro、After Effects：哪些 Adobe 能做而 Artcraft 未提供，哪些是 Artcraft 独有的。'
-      : 'Compare Artcraft v0.41.0 with Photoshop, Illustrator, Premiere Pro, and After Effects module by module: what Adobe does that Artcraft does not provide, and where Artcraft leads.',
+    'Artcraft vs Adobe: PhotoCraft, VectorCraft, FilmCraft & EffectCraft Compared',
+    'Artcraft vs Photoshop, Illustrator, Premiere Pro and After Effects: what the ArtCraft AI app and the Craft apps (PhotoCraft, VectorCraft, FilmCraft, EffectCraft) can and cannot do today, with versions and readiness.',
   )
 }
 
-const adobeAppOrder: AdobeApp[] = ['Photoshop', 'Illustrator', 'Premiere Pro', 'After Effects']
-
 export default async function ComparePage({ params }: { params: Promise<{ locale: string }> }) {
   const lang = getLang((await params).locale)
-  const zh = lang === 'zh'
-  const versionLabel = (app: AdobeApp) => `${app} ${ADOBE_VERSIONS[app].version}`
 
   return (
     <div className="container page-space">
       <PageIntro
         lang={lang}
         eyebrow="ARTCRAFT × ADOBE"
-        title={zh
-          ? <span className="compare-title"><span className="nowrap">生成交给 Artcraft，</span><br /><span className="nowrap">精修交给 Adobe。</span></span>
-          : <>Generate with Artcraft.<br />Polish with Adobe.</>}
-        description={zh
-          ? `Artcraft 强在多模型 AI 生成与 3D 构图，弱在精细修图、矢量设计和专业剪辑。这是面向新手的事实对照，不是 Adobe 官方评测，也不承诺 Artcraft 可以替代 Adobe。本页对比 Artcraft ${ARTCRAFT_VERSION.version} 与下表列出的 Adobe 版本；两边更新都很快，请以各自官方页面为准。`
-          : `Artcraft leads in multi-model AI generation and 3D staging, but trails Adobe in fine retouching, vector design, and pro editing. A beginner-friendly fact table, not an Adobe review, and no promise that Artcraft replaces Adobe. This page compares Artcraft ${ARTCRAFT_VERSION.version} with the Adobe versions listed below. Both change quickly; check each official site.`}
+        title={<>Generate with Artcraft.<br />Polish with Adobe.</>}
+        description={`Artcraft is now two things: the ArtCraft AI app (${ARTCRAFT_VERSION.version}) for AI image and video, and the Craft apps — open-source rebuilds of Photoshop, Illustrator, Premiere Pro and After Effects. The Craft apps already cover a lot, but they are alpha. Adobe still leads for daily professional work.`}
       />
 
-      <div className="table-wrap">
+      {/* ---- At a glance ---- */}
+      <div className="table-wrap compare-table">
         <table>
           <thead><tr>
-            <th>{zh ? '工具' : 'Tool'}</th><th>{zh ? '对比版本' : 'Version compared'}</th><th>{zh ? '主要用途' : 'Main use'}</th><th>{zh ? '价格模式' : 'Pricing'}</th><th>{zh ? '上手难度' : 'Learning curve'}</th><th>{zh ? '适合谁' : 'Good for'}</th>
+            <th>Adobe app (version)</th><th>Artcraft equivalent</th><th>Stage</th><th>Feature breadth</th><th>Ready for real work</th><th>ArtCraft AI app adds</th>
           </tr></thead>
-          <tbody>{adobeRows[lang].map((row) => <tr key={row[0]}>{row.map((cell, i) => <td key={i}>{cell}</td>)}</tr>)}</tbody>
+          <tbody>{craftMatches.map((m) => (
+            <tr key={m.adobe}>
+              <td>{m.adobe}<span className="compare-sub">{ADOBE_VERSIONS[m.adobe].version}</span></td>
+              <td className="compare-app"><a href={`#${m.repo}`}>{m.craft}</a></td>
+              <td><span className="pill pill-blue">{m.stage}</span></td>
+              <td className="compare-num">{m.breadth}</td>
+              <td className="compare-num">{m.ready}</td>
+              <td>{m.aiApp}</td>
+            </tr>
+          ))}</tbody>
         </table>
       </div>
+      <p className="tiny-note">Breadth = how many of the Adobe app’s features exist in some form. Ready for real work = whether a professional could replace the Adobe app today. Both numbers are each project’s own estimate, published in its parity document.</p>
 
-      <div className="source-box comparison-sources">
-        <div>
-          <strong>{zh ? '版本与来源' : 'Versions and sources'}</strong>
-          <p>
-            <a href={OFFICIAL.releases} target="_blank" rel="noreferrer">Artcraft {ARTCRAFT_VERSION.version}</a> ({ARTCRAFT_VERSION.releasedAt}) ·{' '}
-            {adobeAppOrder.map((app, i) => <span key={app}>{i > 0 ? ' · ' : ''}<a href={ADOBE_VERSIONS[app].notes} target="_blank" rel="noreferrer">{versionLabel(app)}</a> ({ADOBE_VERSIONS[app].releasedAt})</span>)}
-          </p>
-          <p>
-            <a href={OFFICIAL.pricing} target="_blank" rel="noreferrer">Artcraft pricing</a> · {Object.entries(adobeLinks).map(([name, url], index) => <span key={name}>{index > 0 ? ' · ' : ''}<a href={url} target="_blank" rel="noreferrer">Adobe {name}</a></span>)}
-          </p>
-          <p className="tiny-note">{zh
-            ? `Artcraft 功能依据官方 GitHub ${ARTCRAFT_VERSION.version} 版本的 README 与源码；Adobe 版本号来自公开发布记录，以 Adobe 官方发布说明为准。最后检查：${COMPARE_CHECKED_AT}。`
-            : `Artcraft features are based on the README and source code of ${ARTCRAFT_VERSION.version} on the official GitHub. Adobe versions come from public release records; Adobe’s own release notes take precedence. Last checked: ${COMPARE_CHECKED_AT}.`}</p>
-        </div>
-      </div>
-
+      {/* ---- Per app ---- */}
       <section className="section-block">
         <div className="section-heading"><div>
-          <p className="eyebrow">{zh ? '逐模块对比' : 'MODULE BY MODULE'}</p>
-          <h2>{zh ? `Artcraft ${ARTCRAFT_VERSION.version} 每个模块，对应 Adobe 的哪一款。` : `Each Artcraft ${ARTCRAFT_VERSION.version} module, next to the closest Adobe app.`}</h2>
+          <p className="eyebrow">APP BY APP</p>
+          <h2>What each Craft app can and can’t do yet.</h2>
         </div></div>
-        <div className="table-wrap compare-table">
-          <table>
-            <thead><tr>
-              <th>{zh ? 'Artcraft 模块' : 'Artcraft module'}</th><th>{zh ? 'Artcraft 能做什么' : 'What Artcraft does'}</th><th>{zh ? '对应 Adobe' : 'Closest Adobe app'}</th><th>{zh ? 'Adobe 能做什么' : 'What Adobe does'}</th><th>{zh ? 'Artcraft 未提供 / 限制' : 'Not provided / limits in Artcraft'}</th>
-            </tr></thead>
-            <tbody>{moduleRows.map((row) => (
-              <tr key={`${row.module}-${row.adobe}`}>
-                <td>{row.module}{row.badge ? <> <span className="pill pill-blue">{row.badge}</span></> : null}</td>
-                <td>{row.artcraft[lang]}</td>
-                <td className="compare-app">{row.adobe === 'none' ? (zh ? '无对应' : 'No match') : versionLabel(row.adobe)}</td>
-                <td>{row.adobeSide[lang]}</td>
-                <td>{row.missing[lang]}</td>
-              </tr>
-            ))}</tbody>
-          </table>
-        </div>
+        <div className="compare-cards">{craftMatches.map((m) => {
+          const links = craftAppLinks(m.repo)
+          return (
+            <article className="compare-card" id={m.repo} key={m.repo}>
+              <header>
+                <p className="eyebrow">{m.adobe.toUpperCase()} {ADOBE_VERSIONS[m.adobe].version}</p>
+                <h3>{m.craft} vs {m.adobe}</h3>
+                <p className="compare-meta"><span className="pill pill-blue">{m.stage}</span> Breadth {m.breadth} · Ready {m.ready}</p>
+              </header>
+              <div className="compare-lists">
+                <div><h4>Already in {m.craft}</h4><ul>{m.has.map((t) => <li key={t}><Check size={14} /> {t}</li>)}</ul></div>
+                <div><h4>Still missing</h4><ul>{m.missing.map((t) => <li key={t}><Minus size={14} /> {t}</li>)}</ul></div>
+              </div>
+              <p className="compare-ai"><strong>ArtCraft AI app {ARTCRAFT_VERSION.version}:</strong> {m.aiApp}</p>
+              <footer>
+                <Link href={`/${lang}/downloads#${m.repo}`}>Download {m.craft}</Link>
+                <a href={links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a>
+                <a href={parityLink(m.repo)} target="_blank" rel="noreferrer">Parity report <ArrowUpRight size={12} /></a>
+              </footer>
+            </article>
+          )
+        })}</div>
       </section>
 
+      {/* ---- Where Artcraft leads ---- */}
       <section className="section-block">
         <div className="section-heading"><div>
-          <p className="eyebrow">{zh ? 'ADOBE 能做，ARTCRAFT 未提供' : 'ADOBE CAN, ARTCRAFT DOES NOT PROVIDE'}</p>
-          <h2>{zh ? `这些事 Artcraft ${ARTCRAFT_VERSION.version} 中未提供。` : `What Artcraft ${ARTCRAFT_VERSION.version} does not provide.`}</h2>
-        </div></div>
-        <div className="table-wrap compare-table">
-          <table>
-            <thead><tr><th>{zh ? '任务' : 'Task'}</th><th>{zh ? '可以用' : 'Available in'}</th><th>{zh ? 'Artcraft 现状' : 'Artcraft today'}</th></tr></thead>
-            <tbody>{adobeOnly.map((row) => (
-              <tr key={row.task.en}>
-                <td>{row.task[lang]}</td>
-                <td className="compare-app">{versionLabel(row.app)}</td>
-                <td>{row.note[lang]}</td>
-              </tr>
-            ))}</tbody>
-          </table>
-        </div>
-        <p className="tiny-note">{zh
-          ? `“未提供”指在 ${ARTCRAFT_VERSION.version} 的官方源码和说明中没有找到对应功能，不代表以后不会加入。`
-          : `“Not provided” means no matching feature was found in the official ${ARTCRAFT_VERSION.version} source and docs; it may be added later.`}</p>
-      </section>
-
-      <section className="section-block">
-        <div className="section-heading"><div>
-          <p className="eyebrow">{zh ? 'ARTCRAFT 领先的地方' : 'WHERE ARTCRAFT LEADS'}</p>
-          <h2>{zh ? '这些是这四款 Adobe 产品没有的。' : 'What these four Adobe apps do not offer.'}</h2>
+          <p className="eyebrow">WHERE ARTCRAFT LEADS</p>
+          <h2>What Adobe doesn’t offer.</h2>
         </div></div>
         <div className="feature-grid">{artcraftLeads.map((lead) => (
-          <div className="feature-card" key={lead.title.en}>
-            <h2>{lead.title[lang]}</h2>
-            <p>{lead.body[lang]}</p>
-            <p className="compare-vs">{lead.vs[lang]}</p>
+          <div className="feature-card" key={lead.title}>
+            <h2>{lead.title}</h2>
+            <p>{lead.body}</p>
+            <p className="compare-vs">{lead.vs}</p>
           </div>
         ))}</div>
       </section>
 
+      {/* ---- Where Adobe leads ---- */}
       <section className="section-block">
-        <div className="section-heading"><div><p className="eyebrow">{zh ? '简单选择' : 'A SIMPLE CHOICE'}</p><h2>{zh ? '你可以这样开始。' : 'A practical way to start.'}</h2></div></div>
-        <div className="choice-grid">
-          <div><strong>01</strong><p>{zh ? '想探索 AI、2D、3D 和图像/视频创作流程：先试 Artcraft。' : 'Want to explore AI, 2D, 3D, and image/video workflows? Start with Artcraft.'}</p></div>
-          <div><strong>02</strong><p>{zh ? '需要成熟的修图、矢量、剪辑或特效工作流：看对应 Adobe 产品。' : 'Need a mature retouching, vector, editing, or effects workflow? Look at the matching Adobe app.'}</p></div>
-          <div><strong>03</strong><p>{zh ? '两者也可以搭配：用 Artcraft 生成素材，再用 Adobe 精修、排版或剪辑。' : 'They can work together: generate material in Artcraft, then refine, lay out, or edit it in Adobe.'}</p></div>
+        <div className="section-heading"><div>
+          <p className="eyebrow">WHERE ADOBE LEADS</p>
+          <h2>What Artcraft doesn’t provide yet.</h2>
+        </div></div>
+        <div className="table-wrap compare-table">
+          <table>
+            <thead><tr><th>Task</th><th>Adobe app</th><th>Artcraft today</th></tr></thead>
+            <tbody>{adobeLeads.map((row) => (
+              <tr key={row.task}>
+                <td>{row.task}</td>
+                <td className="compare-app">{row.app} {ADOBE_VERSIONS[row.app].version}</td>
+                <td>{row.note}</td>
+              </tr>
+            ))}</tbody>
+          </table>
         </div>
       </section>
+
+      <section className="section-block">
+        <div className="section-heading"><div><p className="eyebrow">A SIMPLE CHOICE</p><h2>A practical way to start.</h2></div></div>
+        <div className="choice-grid">
+          <div><strong>01</strong><p>Want AI images, video and 3D staging? Start with the ArtCraft AI app.</p></div>
+          <div><strong>02</strong><p>Curious about free, open-source Photoshop or Premiere alternatives? Try the Craft apps — expect alpha rough edges.</p></div>
+          <div><strong>03</strong><p>Delivering client work on a deadline? Stay with Adobe for now, and revisit as the Craft apps mature.</p></div>
+        </div>
+      </section>
+
+      <div className="source-box comparison-sources">
+        <div>
+          <strong>Versions and sources</strong>
+          <p>
+            <a href={ARTCRAFT_VERSION.readme} target="_blank" rel="noreferrer">ArtCraft AI app {ARTCRAFT_VERSION.version}</a> ({ARTCRAFT_VERSION.releasedAt}) ·{' '}
+            {craftMatches.map((m, i) => <span key={m.repo}>{i > 0 ? ' · ' : ''}<a href={parityLink(m.repo)} target="_blank" rel="noreferrer">{m.craft} parity report</a></span>)}
+          </p>
+          <p>
+            {(Object.keys(ADOBE_VERSIONS) as Array<keyof typeof ADOBE_VERSIONS>).map((app, i) => <span key={app}>{i > 0 ? ' · ' : ''}<a href={ADOBE_VERSIONS[app].notes} target="_blank" rel="noreferrer">{app} {ADOBE_VERSIONS[app].version}</a></span>)}
+            {' · '}{Object.entries(adobeLinks).map(([name, url], i) => <span key={name}>{i > 0 ? ' · ' : ''}<a href={url} target="_blank" rel="noreferrer">Adobe {name}</a></span>)}
+          </p>
+          <p className="tiny-note">Craft app numbers are the projects’ own estimates from their parity reports (Photoshop 27.11.0, Premiere Pro 26.5.2 and After Effects 26.5 were the versions measured against; VectorCraft targets Illustrator 30.x). The Craft apps update almost daily, so details change quickly. Last checked: {COMPARE_CHECKED_AT}.</p>
+        </div>
+      </div>
 
       <SourceLine lang={lang} />
     </div>
