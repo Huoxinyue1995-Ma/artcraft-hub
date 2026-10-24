@@ -1,23 +1,156 @@
 import type { Metadata } from 'next'
-import { ArrowUpRight, CheckCircle2, ExternalLink } from 'lucide-react'
-import { LinkCard } from '@/components/info-card'
+import { Apple, ArrowUpRight, Github, Globe, Monitor, Terminal } from 'lucide-react'
 import { Callout } from '@/components/callout'
 import { PageIntro, SourceLine } from '@/components/site-shell'
-import { currentRelease, getLang, OFFICIAL, pageMetadata, releaseAssets } from '@/lib/content'
+import { getLang, OFFICIAL, pageMetadata, releaseAssets } from '@/lib/content'
+import {
+  ARTCRAFT_APP, LAUNCHER, RELEASES_CHECKED_AT, craftAppLinks,
+  getArtcraftRelease, getCraftAppReleases, getLauncherRelease,
+  type DownloadFile, type Platform,
+} from '@/lib/releases'
+
+// Refresh release data from GitHub every 6 hours (must be a literal; see lib/releases.ts).
+export const revalidate = 21600
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const lang = getLang((await params).locale)
-  return pageMetadata(lang, '/downloads', lang === 'zh' ? 'Artcraft 官方下载与版本校验' : 'Artcraft official downloads and checksums', lang === 'zh' ? '查看 Artcraft 官方下载入口、当前版本、安装文件和 SHA-256 校验值。' : 'Find official Artcraft download links, the current release, installer files, and SHA-256 checksums.')
+  return pageMetadata(
+    lang,
+    '/downloads',
+    'Artcraft Download for Windows, macOS & Linux (Official Links)',
+    'Download the ArtCraft AI app, the ArtCraft Launcher, and every Craft app (PhotoCraft, VectorCraft, FilmCraft and more) from official GitHub and getartcraft.com links, with current versions.',
+  )
+}
+
+const platformMeta: Record<Platform, { name: string; icon: React.ReactNode }> = {
+  windows: { name: 'Windows', icon: <Monitor size={15} /> },
+  macos: { name: 'macOS', icon: <Apple size={15} /> },
+  linux: { name: 'Linux', icon: <Terminal size={15} /> },
+}
+
+function FileLinks({ files, event, compact = false }: { files: DownloadFile[]; event: string; compact?: boolean }) {
+  const platforms: Platform[] = ['windows', 'macos', 'linux']
+  return (
+    <div className={compact ? 'dl-files dl-files-compact' : 'dl-files'}>
+      {platforms.map((p) => {
+        const list = files.filter((f) => f.platform === p)
+        if (list.length === 0) return null
+        return (
+          <div className="dl-platform" key={p}>
+            <span className="dl-platform-name">{platformMeta[p].icon} {platformMeta[p].name}</span>
+            <div className="dl-platform-links">
+              {list.map((f) => (
+                <a key={f.file} href={f.url} rel="noreferrer" data-ga-event={event} title={f.file}>
+                  {compact ? f.label.replace(/^(Windows|macOS|Linux) /, '') : f.label} <ArrowUpRight size={13} />
+                </a>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
 }
 
 export default async function DownloadsPage({ params }: { params: Promise<{ locale: string }> }) {
-  const lang = getLang((await params).locale); const zh = lang === 'zh'
-  return <div className="container page-space"><PageIntro lang={lang} eyebrow={zh ? 'DOWNLOADS' : 'DOWNLOADS'} title={zh ? '从正确的地方下载。' : 'Download from the right place.'} description={zh ? '版本会更新，先确认系统，再打开官方入口。备用镜像只有完成来源和校验检查后才会显示。' : 'Versions change. Check your platform first, then use an official entry point. Mirrors appear only after source and checksum checks.'} />
-    <div className="notice-row"><span><CheckCircle2 size={16} /> {zh ? '官方入口优先' : 'Official source first'}</span><span><CheckCircle2 size={16} /> {zh ? '镜像需要校验' : 'Mirrors are verified'}</span></div>
-    <section className="release-banner"><div><p className="eyebrow">{zh ? '当前官方版本' : 'CURRENT OFFICIAL RELEASE'}</p><h2>{currentRelease.version}</h2><p>{zh ? `发布日期：${currentRelease.releasedAt} · 最后检查：2026-10-20` : `Released ${currentRelease.releasedAt} · Checked 2026-10-20`}</p></div><a className="button button-dark" href={currentRelease.source} target="_blank" rel="noreferrer" data-ga-event="release_notes_click">{zh ? '查看发布说明' : 'View release notes'} <ArrowUpRight size={16} /></a></section>
-    <section className="card-grid three"><LinkCard title={zh ? '官方网站下载' : 'Official website'} description={zh ? '官方稳定下载页：Windows 10 64-bit+、macOS 12+。安装后可能需要免费注册或登录。' : 'Official stable download page for Windows 10 64-bit+ and macOS 12+. A free sign-in may be required after install.'} href={OFFICIAL.download} label={zh ? '打开官方下载页' : 'Open download page'} badge={zh ? '官方' : 'Official'} event="official_download_click" /><LinkCard title={zh ? '浏览器直接使用' : 'Use in browser'} description={zh ? '官方首页还提供浏览器入口，适合先试用。' : 'The official homepage also offers a browser entry point for trying it first.'} href={OFFICIAL.browser} label={zh ? '打开浏览器版' : 'Launch browser version'} badge="Browser" event="browser_launch_click" /><LinkCard title={zh ? '从源码构建' : 'Build from source'} description={zh ? '适合开发者；官方说明包含 Rust、Node.js 和 Tauri CLI。' : 'For developers; the official guide covers Rust, Node.js, and the Tauri CLI.'} href={OFFICIAL.setup} label={zh ? '打开源码说明' : 'Open source setup'} badge={zh ? '开发者路线' : 'Developer route'} event="source_setup_click" /></section>
-    <section className="section-block"><div className="section-heading"><div><p className="eyebrow">{zh ? '当前版本资产' : 'CURRENT RELEASE ASSETS'}</p><h2>{zh ? '官方文件和校验值。' : 'Official files and checksums.'}</h2></div></div><div className="asset-list">{releaseAssets.map((asset) => <div className="asset-row" key={asset.file}><div><strong>{asset.file}</strong><span>{asset.platform}</span></div><code>{asset.sha256}</code><a className="text-link" href={asset.url} target="_blank" rel="noreferrer" data-ga-event="official_asset_download">{zh ? '下载' : 'Download'} <ArrowUpRight size={14} /></a></div>)}</div><p className="tiny-note">{zh ? 'SHA-256 来自官方 v0.41.0 Releases 页面；新版本发布后需重新核对。' : 'SHA-256 values are from the official v0.41.0 Releases page and must be checked again after a new release.'}</p></section>
-    <section className="section-block"><div className="section-heading"><div><p className="eyebrow">{zh ? '版本检查' : 'RELEASE CHECK'}</p><h2>{zh ? '下载前看这四件事。' : 'Check these four things first.'}</h2></div></div><div className="number-grid">{(zh ? ['系统：Windows、macOS，Linux 主要走源码构建。','架构：只选择官方页面明确列出的 x64 或 arm64。','来源：优先使用 getartcraft.com 或 GitHub Releases。','校验：备用文件必须有来源、大小和 SHA-256。'] : ['Platform: Windows and macOS have stable links; Linux is mainly a source build.','Architecture: choose only what the official page lists.','Source: start with getartcraft.com or GitHub Releases.','Checksum: a mirror needs source, size, and SHA-256.']).map((text, i) => <div className="number-item" key={text}><span>0{i + 1}</span><p>{text}</p></div>)}</div></section>
-    <Callout lang={lang} title={zh ? '备用镜像暂不显示' : 'Mirror download is not shown yet'} body={zh ? '为了避免把未知来源的安装包当成官方文件，本版本只展示官方入口。镜像完成许可证、来源、SHA-256 和安装测试后，才会在这里出现。' : 'To avoid presenting an unknown installer as official, this version shows official links only. A mirror appears after license, source, SHA-256, and install checks.'} />
-    <div className="source-box"><ExternalLink size={16} /><div><strong>{zh ? '官方资料与许可证' : 'Official sources and licenses'}</strong><p><a href={OFFICIAL.github} target="_blank" rel="noreferrer" data-ga-event="official_readme_click">GitHub README</a> · <a href={OFFICIAL.releases} target="_blank" rel="noreferrer">Releases</a> · <a href={OFFICIAL.setup} target="_blank" rel="noreferrer">Dev setup</a></p><p><a href={OFFICIAL.licenseMit} target="_blank" rel="noreferrer">MIT</a> · <a href={OFFICIAL.licenseApache} target="_blank" rel="noreferrer">Apache-2.0</a> · <a href={OFFICIAL.license} target="_blank" rel="noreferrer">NOTICE</a></p></div></div><SourceLine lang={lang} /></div>
+  const lang = getLang((await params).locale)
+  const [artcraft, launcher, craftApps] = await Promise.all([getArtcraftRelease(), getLauncherRelease(), getCraftAppReleases()])
+  const checkedNote = artcraft.live && launcher.live && craftApps.every((c) => c.release.live)
+    ? 'Versions are read from each official GitHub release and refreshed every few hours.'
+    : `Some versions could not be refreshed from GitHub and show the last manual check (${RELEASES_CHECKED_AT}).`
+  const artcraftSha = releaseAssets.filter((a) => a.file.includes(artcraft.version))
+
+  return (
+    <div className="container page-space">
+      <PageIntro
+        lang={lang}
+        eyebrow="ARTCRAFT DOWNLOAD"
+        title="Download Artcraft."
+        description="Official links only. Part 1 is the ArtCraft AI app. Part 2 is the Craft App Suite — PhotoCraft, VectorCraft, FilmCraft and ten more — with the ArtCraft Launcher to install and update them."
+      />
+      <nav className="dl-jump" aria-label="On this page">
+        <a href="#artcraft-app">1 · ArtCraft AI app <span>v{artcraft.version}</span></a>
+        <a href="#craft-apps">2 · Craft apps &amp; Launcher <span>13 apps</span></a>
+      </nav>
+
+      {/* ---------------- Part 1: ArtCraft AI app ---------------- */}
+      <section className="section-block dl-part" id="artcraft-app">
+        <div className="section-heading"><div>
+          <p className="eyebrow">PART 1 · THE ARTCRAFT AI APP</p>
+          <h2>ArtCraft AI app download</h2>
+        </div></div>
+        <div className="dl-hero">
+          <div>
+            <p className="dl-version">v{artcraft.version} <span>Released {artcraft.publishedAt}</span></p>
+            <p className="muted">The AI image and video studio: 2D canvas, 3D stage, and 60+ image, video, audio and 3D models. Windows 10 64-bit+ and macOS 12+. A free sign-in may be required after install.</p>
+            <FileLinks files={artcraft.files} event="official_asset_download" />
+          </div>
+          <div className="dl-side">
+            <a className="button button-dark" href={ARTCRAFT_APP.website} target="_blank" rel="noreferrer" data-ga-event="official_download_click">getartcraft.com/download <ArrowUpRight size={15} /></a>
+            <a className="dl-side-link" href={artcraft.releaseUrl} target="_blank" rel="noreferrer" data-ga-event="release_notes_click"><Github size={15} /> Release notes on GitHub</a>
+            <a className="dl-side-link" href={ARTCRAFT_APP.github} target="_blank" rel="noreferrer" data-ga-event="official_github_click"><Github size={15} /> Source code (storytold/artcraft)</a>
+            <a className="dl-side-link" href={ARTCRAFT_APP.browser} target="_blank" rel="noreferrer" data-ga-event="browser_launch_click"><Globe size={15} /> Use it in the browser</a>
+            <a className="dl-side-link" href={OFFICIAL.setup} target="_blank" rel="noreferrer" data-ga-event="source_setup_click"><Terminal size={15} /> Linux: build from source</a>
+          </div>
+        </div>
+        {artcraftSha.length > 0 ? (
+          <details className="dl-checksums">
+            <summary>SHA-256 checksums for v{artcraft.version}</summary>
+            <div className="asset-list">{artcraftSha.map((a) => <div className="asset-row" key={a.file}><div><strong>{a.file}</strong><span>{a.platform}</span></div><code>{a.sha256}</code></div>)}</div>
+          </details>
+        ) : null}
+        <p className="tiny-note">The ArtCraft AI app has no built-in updater in v{artcraft.version}. To update, download the new version from the links above. The ArtCraft Launcher below does not manage this app.</p>
+      </section>
+
+      {/* ---------------- Part 2: Craft App Suite ---------------- */}
+      <section className="section-block dl-part" id="craft-apps">
+        <div className="section-heading"><div>
+          <p className="eyebrow">PART 2 · THE CRAFT APP SUITE</p>
+          <h2>Craft apps download</h2>
+        </div></div>
+        <p className="lead dl-lead">Thirteen free, open-source desktop apps from the ArtCraft team, each written from scratch in Rust. They are separate from the AI app and young — most are in alpha.</p>
+
+        <div className="dl-launcher" id="launcher">
+          <div>
+            <span className="pill pill-blue">Easiest way · {LAUNCHER.status}</span>
+            <h3>ArtCraft Launcher <span>v{launcher.version}</span></h3>
+            <p>One app to install, update and open all 13 Craft apps. It picks the right build for your system, checks every download against its SHA-256 checksum, and tells you when an update is out. Released {launcher.publishedAt}.</p>
+            <FileLinks files={launcher.files} event="launcher_download" />
+          </div>
+          <div className="dl-side">
+            <a className="button button-dark" href={LAUNCHER.releases} target="_blank" rel="noreferrer" data-ga-event="launcher_release_click">All Launcher files <ArrowUpRight size={15} /></a>
+            <a className="dl-side-link" href={LAUNCHER.github} target="_blank" rel="noreferrer" data-ga-event="launcher_github_click"><Github size={15} /> storytold/craft-launcher</a>
+            <p className="tiny-note">Also available for Windows 32-bit, Linux Arm/RISC-V, FreeBSD, Flatpak and the web on the release page.</p>
+          </div>
+        </div>
+
+        <div className="table-wrap dl-table">
+          <table>
+            <thead><tr><th>App</th><th>What it is for</th><th>Version</th><th>Direct download</th><th>Links</th></tr></thead>
+            <tbody>
+              {craftApps.map(({ app, release }) => {
+                const links = craftAppLinks(app.id)
+                return (
+                  <tr key={app.id} id={app.id}>
+                    <td>{app.name}<span className="dl-similar">like {app.similarTo}</span></td>
+                    <td className="dl-purpose">{app.purpose}</td>
+                    <td className="dl-ver"><a href={release.releaseUrl} target="_blank" rel="noreferrer">v{release.version}</a><span>{release.publishedAt}</span></td>
+                    <td><FileLinks files={release.files.filter((f) => !/Arm|\.rpm/.test(f.label))} event="craft_app_download" compact /></td>
+                    <td className="dl-links">
+                      <a href={links.github} target="_blank" rel="noreferrer" data-ga-event="craft_app_github_click">GitHub</a>
+                      <a href={links.website} target="_blank" rel="noreferrer" data-ga-event="craft_app_website_click">Website</a>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className="tiny-note">{checkedNote} Each release page lists more builds (Windows Arm, Linux .rpm/Arm, portable zip) and a SHA256SUMS.txt file. “Like …” is only a rough orientation, not a claim of compatibility.</p>
+      </section>
+
+      <Callout lang={lang} title="Download only from official sources" body="Every link on this page goes to github.com/storytold or getartcraft.com. If you got an Artcraft installer anywhere else, delete it and download it again here." />
+      <SourceLine lang={lang} />
+    </div>
+  )
 }

@@ -4,8 +4,8 @@ const DEFAULT_UPDATED = '2026-10-20'
 
 // Update the date here when a page's content changes meaningfully.
 const pages: Array<{ path: string; updated?: string }> = [
-  { path: '' },
-  { path: '/downloads' },
+  { path: '', updated: '2026-10-24' },
+  { path: '/downloads', updated: '2026-10-24' },
   { path: '/features' },
   { path: '/faq' },
   { path: '/about' },
