@@ -10,6 +10,12 @@ const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+const baiduVerification = process.env.NEXT_PUBLIC_BAIDU_SITE_VERIFICATION
+
+const otherVerification: Record<string, string> = {
+  ...(bingVerification ? { 'msvalidate.01': bingVerification } : {}),
+  ...(baiduVerification ? { 'baidu-site-verification': baiduVerification } : {}),
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -18,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: { type: 'website', siteName: 'Artcraft Hub', title: 'Artcraft Hub', description: 'Independent Artcraft resource for beginners.' },
   verification: {
     ...(googleVerification ? { google: googleVerification } : {}),
-    ...(bingVerification ? { other: { 'msvalidate.01': bingVerification } } : {}),
+    ...(Object.keys(otherVerification).length ? { other: otherVerification } : {}),
   },
 }
 
