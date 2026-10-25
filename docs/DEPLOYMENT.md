@@ -17,7 +17,7 @@
 | 正式域名 | `https://artcraftphotocraft.space` 作为主地址；`www` CNAME 尚未配置 |
 | Google Search Console | URL 前缀资源已用 HTML 标记验证 |
 | Google sitemap | `/sitemap.xml` 提交成功，已发现 24 个网址 |
-| GA4 | 已接入 `G-5D1QDLHCF2`，生产环境已部署 |
+| GA4 | 已接入 `G-B1WN742VLY`（Artcraft Hub 媒体资源）。注意：`G-5D1QDLHCF2` 属于 neonandbeyond.site，不要用在本项目 |
 | Vercel Web Analytics | 代码已接入；在 Vercel 项目 Analytics 页面启用后，可看页面 PV、访客数、热门页面和来源 |
 | Bing | 已验证 `artcraftphotocraft.space`，已提交 `https://artcraftphotocraft.space/sitemap.xml` |
 | AdSense | 已添加网站、元标记验证并提交审核；后台显示“正在准备” |
