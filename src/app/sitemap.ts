@@ -13,6 +13,7 @@ const pages: Array<{ path: string; updated?: string }> = [
   { path: '/privacy' },
   { path: '/terms' },
   { path: '/compare/adobe', updated: '2026-10-24' },
+  { path: '/is-artcraft-safe', updated: '2026-10-26' },
   { path: '/install/windows' },
   { path: '/install/macos' },
   { path: '/install/linux' },
