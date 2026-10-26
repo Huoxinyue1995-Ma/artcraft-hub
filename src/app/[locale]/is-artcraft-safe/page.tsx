@@ -24,7 +24,7 @@ const DESCRIPTION = 'ArtCraft is two things — 13 local open-source apps and an
 const faq: Array<{ q: string; a: string }> = [
   {
     q: 'Is ArtCraft free?',
-    a: 'The 13 Craft apps (PhotoCraft, VectorCraft, FilmCraft and the rest) are free and open source. The ArtCraft AI app is also open source and free to download, but AI generations use credits. Paid plans start at $8/month during the current 20%-off offer ($10 regular), and the official pricing page says ArtCraft can be used without a subscription if you bring your own compute or third-party subscriptions.',
+    a: 'The 13 Craft apps (PhotoCraft, VectorCraft, FilmCraft and the rest) are free and open source. The ArtCraft AI app is also open source and free to download, but AI generations use credits. Paid plans start at $8/month billed yearly (or $10 billed monthly) during the current limited-time 20%-off offer, and the official pricing page says ArtCraft can be used without a subscription if you bring your own compute or third-party subscriptions.',
   },
   {
     q: 'Is ArtCraft open source?',
@@ -204,7 +204,7 @@ export default async function IsArtcraftSafePage({ params }: { params: Promise<{
           <li>Checkout runs through Stripe (“Secure checkout via Stripe”), so ArtCraft does not handle your card number directly, and plans say “Cancel anytime”.</li>
           <li>“Credits refunded if a generation fails” — you are not charged for failed jobs.</li>
           <li>Subscriptions are optional: ArtCraft “can be used without paying for a subscription. You can bring your own compute and third-party subscriptions.” One-time credit packs “never expire”.</li>
-          <li>Prices on {SAFETY_CHECKED_AT}: Basic $8/mo, Pro $28/mo, Max $48/mo (billed yearly), shown as a “limited-time” 20% discount on $10, $35 and $60. Limited-time prices change — check the pricing page before you buy.</li>
+          <li>Prices on {SAFETY_CHECKED_AT}, during a “limited-time” 20%-off offer: Basic $8, Pro $28 and Max $48 per month billed yearly (regularly $10, $35 and $60), or $10, $35 and $60 billed monthly (regularly $13, $44 and $75). The offer is marked “ends soon” — check the pricing page before you buy.</li>
         </ul>
 
         {/* §6 */}
