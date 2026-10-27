@@ -16,7 +16,7 @@ const pages: Array<{ path: string; updated?: string }> = [
   { path: '/is-artcraft-safe', updated: '2026-10-26' },
   { path: '/install/windows' },
   { path: '/install/macos' },
-  { path: '/install/linux' },
+  { path: '/install/linux', updated: '2026-10-27' },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
