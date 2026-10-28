@@ -1,7 +1,7 @@
 export type Lang = 'zh' | 'en'
 
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://artcraftphotocraft.space'
-export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@example.com'
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'huoxinyue1995@gmail.com'
 
 export const OFFICIAL = {
   github: 'https://github.com/storytold/artcraft',
@@ -82,21 +82,16 @@ export const adobeLinks = {
   'After Effects': 'https://www.adobe.com/products/aftereffects.html',
 } as const
 
-export const faqData = {
-  zh: [
-    ['Artcraft 是什么？', 'Artcraft 是 storytold 发布的桌面与浏览器 AI 创作工具。本站只整理官方公开资料，不是官方产品页。'],
-    ['应该从哪里下载？', '优先打开官方 getartcraft.com 或 GitHub Releases。请确认系统和版本后再安装。'],
-    ['Windows、macOS、Linux 都能用吗？', '当前官方下载页列出 Windows 10 64-bit+ 和 macOS 12+；Linux 主要参考源码构建说明，不能把它当成现成安装包。安装后可能需要免费注册或登录。'],
-    ['为什么没有备用镜像？', '镜像需要逐个核对来源、版本和 SHA-256。确认前，页面只展示官方入口，避免用户下载到未知文件。'],
-    ['安装时被系统拦截怎么办？', '先确认文件来自官方链接，再阅读系统提示。不要关闭安全软件去运行不明文件。'],
-    ['Artcraft 和 Adobe 是替代关系吗？', '不一定。Artcraft 更适合探索 AI 创作流程，Adobe 套件各自专注修图、矢量、剪辑或特效。'],
-  ],
-  en: [
-    ['What is Artcraft?', 'Artcraft is a desktop and browser AI creative tool published by storytold. This site only organizes public official material.'],
-    ['Where should I download it?', 'Start with the official getartcraft.com page or GitHub Releases. Check your system and version first.'],
-    ['Does it support Windows, macOS, and Linux?', 'The current download page lists Windows 10 64-bit+ and macOS 12+. For Linux, use the source setup guide rather than assuming a ready-made package. A free sign-in may be required after installation.'],
-    ['Why is there no mirror download yet?', 'A mirror must be checked for its source, version, and SHA-256. Until then, this site shows official links only.'],
-    ['What if my system blocks the installer?', 'Confirm the file came from an official link and read the system warning. Do not run unknown files or disable security tools.'],
-    ['Is Artcraft a replacement for Adobe?', 'Not always. Artcraft is for exploring AI creative workflows, while Adobe apps focus on editing, vectors, video, or effects.'],
-  ],
-} as const
+/** FAQ shown on /en/faq (English only). Keep answers consistent with the downloads, safety and Linux pages. */
+export const faqItems: Array<[string, string]> = [
+  ['What is ArtCraft?', 'ArtCraft is two things from the same team: the ArtCraft AI app, a desktop and browser studio for AI images, video and 3D, and the Craft apps, 13 free open-source desktop tools such as PhotoCraft, VectorCraft and FilmCraft. Artcraft Hub is an independent guide to both, not the official site.'],
+  ['Is ArtCraft free?', 'The 13 Craft apps are free and open source. The ArtCraft AI app is free to download, but AI generations use credits. Paid plans are optional, and the official pricing page says you can bring your own compute or third-party subscriptions instead.'],
+  ['Where should I download it?', 'Only from getartcraft.com or GitHub Releases under github.com/storytold. Our downloads page lists both, with current versions and SHA-256 checksums. Avoid third-party download portals.'],
+  ['Does it work on Windows, macOS and Linux?', 'The ArtCraft AI app has installers for Windows 10 64-bit+ and macOS 12+; on Linux you build it from source. The Craft apps and the ArtCraft Launcher run on Windows, macOS and Linux, and most Craft apps also run in a browser.'],
+  ['What is the ArtCraft Launcher?', 'An official app that installs, updates and opens all 13 Craft apps. It does not manage the ArtCraft AI app, which you update from its own download page.'],
+  ['How do I install it on Linux?', 'Use the ArtCraft Launcher. The AppImage is the easiest; .deb and .rpm packages and a Flatpak are also available for x86_64 and aarch64, and .deb, .rpm and .tar.gz for RISC-V. Our Linux guide covers each one.'],
+  ['Is ArtCraft safe?', 'The software is not malicious. The Craft apps run locally on your files, while the AI app sends prompts and images to remote models and needs an account. The main risk is that most apps are still alpha, so keep backups. Our safety guide covers this in detail.'],
+  ['What if my system blocks the installer?', 'First confirm the file came from an official link and matches its checksum. The ArtCraft AI app installer for Windows is not code-signed, so SmartScreen may warn about an unknown publisher. Never disable security tools to run a file you are unsure about.'],
+  ['Can ArtCraft replace Adobe?', 'Not yet for most professional work. PhotoCraft, VectorCraft, FilmCraft and EffectCraft cover much of Photoshop, Illustrator, Premiere Pro and After Effects, but they are alpha. Our comparison page shows what each one can and cannot do today.'],
+  ['Why is there no mirror download?', 'A mirror would need its source, version and checksum verified for every release. Until we can do that reliably, this site links only to official files.'],
+]

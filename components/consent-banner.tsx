@@ -25,5 +25,5 @@ export function ConsentBanner() {
     ;(window as GtagWindow).gtag?.('consent', 'update', { analytics_storage: accepted ? 'granted' : 'denied', ad_storage: accepted ? 'granted' : 'denied', ad_user_data: accepted ? 'granted' : 'denied', ad_personalization: accepted ? 'granted' : 'denied' })
     setVisible(false)
   }
-  return <aside className="consent-banner" aria-label="Cookie choices"><p>Optional analytics help us understand visits and downloads. You can decline.</p><div><button onClick={() => choose(false)}>Decline</button><button className="consent-accept" onClick={() => choose(true)}>Accept</button></div></aside>
+  return <aside className="consent-banner" aria-label="Cookie choices"><p>We use optional cookies for analytics and personalized ads. If you decline, ads may still appear but won't be personalized. <a href="/en/privacy">Privacy policy</a></p><div><button onClick={() => choose(false)}>Decline</button><button className="consent-accept" onClick={() => choose(true)}>Accept</button></div></aside>
 }
