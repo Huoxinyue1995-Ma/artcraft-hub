@@ -43,6 +43,7 @@ export function SiteFooter({ lang }: { lang: Lang }) {
             <Link href={`/${lang}/install/windows`}>{lang === 'zh' ? '安装教程' : 'Setup guides'}</Link>
             <Link href={`/${lang}/compare/adobe`}>{lang === 'zh' ? '对比 Adobe' : 'Compare Adobe'}</Link>
             <Link href={`/${lang}/is-artcraft-safe`}>Is ArtCraft safe?</Link>
+            <Link href={`/${lang}/wordcraft`}>WordCraft (Word alternative)</Link>
           </div>
           <div>
             <p className="footer-heading">{lang === 'zh' ? '关于本站' : 'About this site'}</p>

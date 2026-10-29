@@ -131,3 +131,5 @@ a:hover { color:var(--blue); }
 .cookie-choice { display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin:14px 0 6px; padding:14px 18px; border:1px solid var(--line); border-radius:14px; background:#fff; font-size:14px; }.cookie-choice button { border:0; border-radius:999px; padding:9px 16px; background:var(--ink); color:#fff; font-weight:750; font-size:13px; cursor:pointer; }.cookie-choice button:hover { background:var(--blue); }
 .faq-more { margin-top:22px; }.faq-more a { color:var(--blue); text-decoration:underline; text-underline-offset:2px; }
 .consent-banner a { color:#9db1ff; text-decoration:underline; text-underline-offset:2px; white-space:nowrap; }
+/* WordCraft page */
+.wc-table table { min-width:860px; }.wc-table td:first-child { width:150px; }.wc-status { white-space:nowrap; }.wc-status span { display:inline-flex; align-items:center; gap:4px; font-size:12px; }.wc-partial { color:#8a6d12; font-weight:800; }

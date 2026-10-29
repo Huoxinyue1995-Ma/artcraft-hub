@@ -89,7 +89,7 @@ const FALLBACK_VERSIONS: Record<string, { version: string; publishedAt: string }
   effectcraft: { version: '0.16.0', publishedAt: '2026-10-23' },
   designcraft: { version: '0.12.0', publishedAt: '2026-10-22' },
   figcraft: { version: '0.10.0', publishedAt: '2026-10-22' },
-  wordcraft: { version: '0.10.0', publishedAt: '2026-10-22' },
+  wordcraft: { version: '0.12.0', publishedAt: '2026-10-28' },
   soundcraft: { version: '0.12.1', publishedAt: '2026-10-22' },
   deckcraft: { version: '0.10.0', publishedAt: '2026-10-22' },
   cadcraft: { version: '0.12.0', publishedAt: '2026-10-23' },
@@ -208,6 +208,21 @@ async function getRelease(repo: string, assetStem: string, rules: Rule[]): Promi
 
 export const getArtcraftRelease = () => getRelease('artcraft', 'ArtCraft', ARTCRAFT_RULES)
 export const getLauncherRelease = () => getRelease('craft-launcher', 'artcraft-launcher', suiteRules('artcraft-launcher'))
+
+/** Every desktop build of one Craft app, for app pages that list all files (portable, 32-bit, Arm, Flatpak, web). */
+const fullSuiteRules = (id: string): Rule[] => [
+  { platform: 'windows', label: 'Installer, 64-bit (.msi)', match: new RegExp(`^${id}-[\\d.]+-windows-x64\\.msi$`) },
+  { platform: 'windows', label: 'Portable, 64-bit (.zip)', match: new RegExp(`^${id}-[\\d.]+-windows-x64-portable\\.zip$`) },
+  { platform: 'windows', label: 'Installer, Arm (.msi)', match: new RegExp(`^${id}-[\\d.]+-windows-arm64\\.msi$`) },
+  { platform: 'windows', label: 'Installer, 32-bit (.msi)', match: new RegExp(`^${id}-[\\d.]+-windows-x86\\.msi$`) },
+  { platform: 'macos', label: 'Universal (.dmg)', match: new RegExp(`^${id}-[\\d.]+-macos-universal\\.dmg$`) },
+  { platform: 'linux', label: 'AppImage (x86_64)', match: new RegExp(`^${id}-[\\d.]+-linux-x86_64\\.AppImage$`) },
+  { platform: 'linux', label: '.deb (x86_64)', match: new RegExp(`^${id}-[\\d.]+-linux-x86_64\\.deb$`) },
+  { platform: 'linux', label: '.rpm (x86_64)', match: new RegExp(`^${id}-[\\d.]+-linux-x86_64\\.rpm$`) },
+  { platform: 'linux', label: 'Flatpak (x86_64)', match: new RegExp(`^${id}-[\\d.]+-linux-x86_64\\.flatpak$`) },
+  { platform: 'linux', label: 'AppImage (Arm64)', match: new RegExp(`^${id}-[\\d.]+-linux-aarch64\\.AppImage$`) },
+]
+export const getCraftAppFullRelease = (id: string) => getRelease(id, id, fullSuiteRules(id))
 export async function getCraftAppReleases() {
   return Promise.all(CRAFT_APPS.map(async (app) => ({ app, release: await getRelease(app.id, app.id, suiteRules(app.id)) })))
 }

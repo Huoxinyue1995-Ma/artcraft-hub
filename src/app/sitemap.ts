@@ -14,6 +14,7 @@ const pages: Array<{ path: string; updated?: string }> = [
   { path: '/terms', updated: '2026-10-27' },
   { path: '/compare/adobe', updated: '2026-10-24' },
   { path: '/is-artcraft-safe', updated: '2026-10-26' },
+  { path: '/wordcraft', updated: '2026-10-29' },
   { path: '/install/windows' },
   { path: '/install/macos' },
   { path: '/install/linux', updated: '2026-10-27' },

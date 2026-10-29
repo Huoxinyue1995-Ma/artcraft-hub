@@ -74,6 +74,7 @@ export default async function FeaturesPage({ params }: { params: Promise<{ local
               <p>{app.purpose}</p>
               <p className="craft-like">Similar job to {app.similarTo}</p>
               <footer>
+                {app.id === 'wordcraft' ? <Link href={`/${lang}/wordcraft`}>Guide</Link> : null}
                 <Link href={`/${lang}/downloads#${app.id}`}>Download</Link>
                 <a href={links.github} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={12} /></a>
                 <a href={links.website} target="_blank" rel="noreferrer">Website <ArrowUpRight size={12} /></a>
